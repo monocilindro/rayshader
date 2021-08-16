@@ -8,23 +8,36 @@
 
 <title>Render Camera — render_camera • rayshader</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,8 +49,11 @@
 <meta property="og:title" content="Render Camera — render_camera" />
 <meta property="og:description" content="Changes the position and properties of the camera around the scene. If no 
 values are entered, prints and returns the current values." />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://www.rayshader.com/reference/figures/website.jpg" />
+<meta property="og:image:alt" content="Picture of a 3D map made with rayshader" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@tylermorganwall" />
+<meta name="twitter:site" content="@tylermorganwall" />
 
 
 
@@ -52,9 +68,10 @@ values are entered, prints and returns the current values." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -68,7 +85,7 @@ values are entered, prints and returns the current values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
       </span>
     </div>
 
@@ -82,16 +99,19 @@ values are entered, prints and returns the current values." />
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Rayshader Blog
+    Tutorials/Blog Posts
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
+      <a href="https://www.tylermw.com/adding-open-street-map-data-to-rayshader-maps-in-r/">Tutorial: Adding Open Street Map Data to Rayshader Maps in R</a>
     </li>
     <li>
-      <a href="https://www.tylermw.com/2018-year-in-review/">2018 Year in Review</a>
+      <a href="https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/">A Step-by-Step Guide to Making 3D Maps with Satellite Imagery in R</a>
+    </li>
+    <li>
+      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
     </li>
     <li>
       <a href="https://www.tylermw.com/portrait-mode-data/">Portrait Mode for Data: Rayshader + Rayfocus</a>
@@ -140,6 +160,7 @@ values are entered, prints and returns the current values." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -155,7 +176,7 @@ values are entered, prints and returns the current values." />
 values are entered, prints and returns the current values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fov</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='cn'>NULL</span>, phi <span class='op'>=</span> <span class='cn'>NULL</span>, zoom <span class='op'>=</span> <span class='cn'>NULL</span>, fov <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,45 +201,61 @@ values are entered, prints and returns the current values.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>montereybay</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span>() <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='plot_3d.html'>plot_3d</a></span>(<span class='no'>montereybay</span>,<span class='kw'>zscale</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>water</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>waterlinecolor</span><span class='kw'>=</span><span class='st'>"white"</span>)
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span>()</div><div class='img'><img src='render_camera-1.png' alt='' width='700' height='433' /></div><div class='input'>
-#Shift the camera over and add a title
-</div><div class='input'><span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> -<span class='fl'>45</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>45</span>)
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
-               <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>)</div><div class='img'><img src='render_camera-2.png' alt='' width='700' height='433' /></div><div class='input'>
-#Shift to an overhead view (and change the text/title bar color)
-</div><div class='input'><span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>90</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
-               <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-               <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"darkgreen"</span>)</div><div class='img'><img src='render_camera-3.png' alt='' width='700' height='433' /></div><div class='input'>
-#Shift to an front view and add a vignette effect
-</div><div class='input'><span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> -<span class='fl'>90</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>30</span>,<span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
-               <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-               <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
-               <span class='kw'>vignette</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_camera-4.png' alt='' width='700' height='433' /></div><div class='input'>
-#Change the field of view (fov) and make the title bar opaque.
-</div><div class='input'><span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> -<span class='fl'>90</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>30</span>,<span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,<span class='kw'>fov</span> <span class='kw'>=</span> <span class='fl'>130</span>)
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
-               <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-               <span class='kw'>title_bar_alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-               <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"lightblue"</span>,
-               <span class='kw'>vignette</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='render_camera-5.png' alt='' width='700' height='433' /></div><div class='input'>
-#Here we render a series of frames to later stitch together into a movie.
+    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='plot_3d.html'>plot_3d</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale <span class='op'>=</span> <span class='fl'>50</span>, water <span class='op'>=</span> <span class='cn'>TRUE</span>, waterlinecolor<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span>
+<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='render_camera-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
-</div><div class='input'><span class='no'>phivec</span> <span class='kw'>=</span> <span class='fl'>20</span> + <span class='fl'>70</span> * <span class='fl'>1</span>/(<span class='fl'>1</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(-<span class='fl'>5</span>, <span class='fl'>10</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>180</span>)))
-<span class='no'>phivecfull</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>phivec</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='no'>phivec</span>))
-<span class='no'>thetavec</span> <span class='kw'>=</span> <span class='fl'>270</span> + <span class='fl'>45</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>sin</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>359</span>,<span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>360</span>) * <span class='no'>pi</span>/<span class='fl'>180</span>)
-<span class='no'>zoomvechalf</span> <span class='kw'>=</span> <span class='fl'>0.5</span> + <span class='fl'>0.5</span> * <span class='fl'>1</span>/(<span class='fl'>1</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(-<span class='fl'>5</span>, <span class='fl'>10</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>180</span>)))
-<span class='no'>zoomvec</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>zoomvechalf</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='no'>zoomvechalf</span>))
+<span class='co'>#Shift the camera over and add a title</span>
+<span class='co'># \dontrun{</span>
+<span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='op'>-</span><span class='fl'>45</span>, phi <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
+<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
+               title_bar_color <span class='op'>=</span> <span class='st'>"grey50"</span><span class='op'>)</span>
+</div><div class='img'><img src='render_camera-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
-<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>360</span>) {
- <span class='fu'>render_camera</span>(<span class='kw'>theta</span> <span class='kw'>=</span> <span class='no'>thetavec</span>[<span class='no'>i</span>],<span class='kw'>phi</span> <span class='kw'>=</span> <span class='no'>phivecfull</span>[<span class='no'>i</span>],<span class='kw'>zoom</span> <span class='kw'>=</span> <span class='no'>zoomvec</span>[<span class='no'>i</span>])
+<span class='co'>#Shift to an overhead view (and change the text/title bar color)</span>
+<span class='co'># \dontrun{</span>
+<span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='fl'>0</span>, phi <span class='op'>=</span> <span class='fl'>90</span>, zoom <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span>
+<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
+               title_color <span class='op'>=</span> <span class='st'>"white"</span>,
+               title_bar_color <span class='op'>=</span> <span class='st'>"darkgreen"</span><span class='op'>)</span>
+</div><div class='img'><img src='render_camera-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+
+<span class='co'>#Shift to an front view and add a vignette effect</span>
+<span class='co'># \dontrun{</span>
+<span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='op'>-</span><span class='fl'>90</span>, phi <span class='op'>=</span> <span class='fl'>30</span>,zoom <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
+<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
+               title_color <span class='op'>=</span> <span class='st'>"white"</span>,
+               title_bar_color <span class='op'>=</span> <span class='st'>"blue"</span>,
+               vignette <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='render_camera-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+
+<span class='co'>#Change the field of view (fov) and make the title bar opaque.</span>
+<span class='co'># \dontrun{</span>
+<span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='op'>-</span><span class='fl'>90</span>, phi <span class='op'>=</span> <span class='fl'>30</span>,zoom <span class='op'>=</span> <span class='fl'>0.5</span>,fov <span class='op'>=</span> <span class='fl'>130</span><span class='op'>)</span>
+<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, CA"</span>,
+               title_color <span class='op'>=</span> <span class='st'>"black"</span>,
+               title_bar_alpha <span class='op'>=</span> <span class='fl'>1</span>,
+               title_bar_color <span class='op'>=</span> <span class='st'>"lightblue"</span>,
+               vignette <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='render_camera-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+
+<span class='co'>#Here we render a series of frames to later stitch together into a movie.</span>
+
+<span class='co'># \dontrun{</span>
+<span class='va'>phivec</span> <span class='op'>=</span> <span class='fl'>20</span> <span class='op'>+</span> <span class='fl'>70</span> <span class='op'>*</span> <span class='fl'>1</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>180</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>phivecfull</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>phivec</span>, <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>phivec</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>thetavec</span> <span class='op'>=</span> <span class='fl'>270</span> <span class='op'>+</span> <span class='fl'>45</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>359</span>,length.out <span class='op'>=</span> <span class='fl'>360</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span><span class='op'>)</span>
+<span class='va'>zoomvechalf</span> <span class='op'>=</span> <span class='fl'>0.5</span> <span class='op'>+</span> <span class='fl'>0.5</span> <span class='op'>*</span> <span class='fl'>1</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>180</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>zoomvec</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>zoomvechalf</span>, <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>zoomvechalf</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>360</span><span class='op'>)</span> <span class='op'>{</span>
+ <span class='fu'>render_camera</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='va'>thetavec</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,phi <span class='op'>=</span> <span class='va'>phivecfull</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,zoom <span class='op'>=</span> <span class='va'>zoomvec</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>
  <span class='co'>#uncomment the next line to save each frame to the working directory</span>
  <span class='co'>#render_snapshot(paste0("frame", i, ".png"))</span>
-}
+<span class='op'>}</span>
 <span class='co'>#Run this command in the command line using ffmpeg to stitch together a video:</span>
 <span class='co'>#ffmpeg -framerate 60 -i frame%d.png -vcodec libx264 raymovie.mp4</span>
 
@@ -228,20 +265,17 @@ values are entered, prints and returns the current values.</p>
 <span class='co'>#Or we can use render_movie() to do this all automatically with type="custom" (uncomment to run):</span>
 <span class='co'>#render_movie(filename = tempfile(fileext = ".mp4"), type = "custom", </span>
 <span class='co'>#             theta = thetavec, phi = phivecfull, zoom = zoomvec, fov=0)</span>
-<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/rgl.open'>rgl.close</a></span>()</div><div class='input'>
-
-
+<span class='fu'>rgl</span><span class='fu'>::</span><span class='fu'><a href='https://dmurdoch.github.io/rgl/reference/rgl.open.html'>rgl.close</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -249,13 +283,16 @@ values are entered, prints and returns the current values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

@@ -8,23 +8,36 @@
 
 <title>Render Snapshot of 3D Visualization — render_snapshot • rayshader</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,8 +48,11 @@
 
 <meta property="og:title" content="Render Snapshot of 3D Visualization — render_snapshot" />
 <meta property="og:description" content="Either captures the current rgl view and displays, or saves the current view to disk." />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://www.rayshader.com/reference/figures/website.jpg" />
+<meta property="og:image:alt" content="Picture of a 3D map made with rayshader" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@tylermorganwall" />
+<meta name="twitter:site" content="@tylermorganwall" />
 
 
 
@@ -51,9 +67,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -67,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
       </span>
     </div>
 
@@ -81,16 +98,19 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Rayshader Blog
+    Tutorials/Blog Posts
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
+      <a href="https://www.tylermw.com/adding-open-street-map-data-to-rayshader-maps-in-r/">Tutorial: Adding Open Street Map Data to Rayshader Maps in R</a>
     </li>
     <li>
-      <a href="https://www.tylermw.com/2018-year-in-review/">2018 Year in Review</a>
+      <a href="https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/">A Step-by-Step Guide to Making 3D Maps with Satellite Imagery in R</a>
+    </li>
+    <li>
+      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
     </li>
     <li>
       <a href="https://www.tylermw.com/portrait-mode-data/">Portrait Mode for Data: Rayshader + Rayfocus</a>
@@ -139,6 +159,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -153,11 +174,38 @@
     <p>Either captures the current rgl view and displays, or saves the current view to disk.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>render_snapshot</span>(<span class='no'>filename</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>title_text</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>title_offset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>20</span>), <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>title_size</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>title_font</span> <span class='kw'>=</span> <span class='st'>"sans"</span>, <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title_bar_alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>image_overlay</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vignette</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>instant_capture</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>(), <span class='kw'>bring_to_front</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>render_snapshot</span><span class='op'>(</span>
+  <span class='va'>filename</span>,
+  clear <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  title_text <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title_offset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>20</span><span class='op'>)</span>,
+  title_color <span class='op'>=</span> <span class='st'>"black"</span>,
+  title_size <span class='op'>=</span> <span class='fl'>30</span>,
+  title_font <span class='op'>=</span> <span class='st'>"sans"</span>,
+  title_bar_color <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title_bar_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+  title_position <span class='op'>=</span> <span class='st'>"northwest"</span>,
+  image_overlay <span class='op'>=</span> <span class='cn'>NULL</span>,
+  vignette <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  instant_capture <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
+  bring_to_front <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep_user_par <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  webshot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  software_render <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  camera_location <span class='op'>=</span> <span class='cn'>NULL</span>,
+  camera_lookat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  background <span class='op'>=</span> <span class='cn'>NULL</span>,
+  text_angle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  text_size <span class='op'>=</span> <span class='fl'>10</span>,
+  text_offset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  point_radius <span class='op'>=</span> <span class='fl'>2</span>,
+  line_offset <span class='op'>=</span> <span class='fl'>1e-07</span>,
+  cache_filename <span class='op'>=</span> <span class='cn'>NULL</span>,
+  print_scene_info <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,6 +249,10 @@ image_annotate) corner to offset the title.</p></td>
       <td><p>Default `0.5`. Transparency of the title bar.</p></td>
     </tr>
     <tr>
+      <th>title_position</th>
+      <td><p>Default `northwest`. Position of the title.</p></td>
+    </tr>
+    <tr>
       <th>image_overlay</th>
       <td><p>Default `NULL`. Either a string indicating the location of a png image to overlay
 over the image (transparency included), or a 4-layer RGBA array. This image will be resized to the 
@@ -222,8 +274,79 @@ before taking the snapshot. This can help stop prevent rendering issues when run
       <td><p>Default `FALSE`. Whether to bring the window to the front when taking the snapshot.</p></td>
     </tr>
     <tr>
+      <th>keep_user_par</th>
+      <td><p>Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you 
+want to set up a multi-pane plot (e.g. set `par(mfrow)`).</p></td>
+    </tr>
+    <tr>
+      <th>webshot</th>
+      <td><p>Default `FALSE`. Set to `TRUE` to have rgl use the `webshot2` package to take images,
+which can be used when `rgl.useNULL = TRUE`.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>Default `NULL`. Optional argument to pass to `rgl::snapshot3d()` to specify the
+width when `software_render = TRUE`..</p></td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td><p>Default `NULL`. Optional argument to pass to `rgl::snapshot3d()` to specify the
+height when `software_render = TRUE`.</p></td>
+    </tr>
+    <tr>
+      <th>software_render</th>
+      <td><p>Default `FALSE`. If `TRUE`, rayshader will use the rayvertex package to render the snapshot, which
+is not constrained by the screen size or requires OpenGL. 
+Consider settings a `cache_filename` so a new OBJ file doesn't have to be written with every snapshot.</p></td>
+    </tr>
+    <tr>
+      <th>camera_location</th>
+      <td><p>Default `NULL`. Custom position of the camera. The `FOV`, `width`, and `height` arguments will still
+be derived from the rgl window.</p></td>
+    </tr>
+    <tr>
+      <th>camera_lookat</th>
+      <td><p>Default `NULL`. Custom point at which the camera is directed. The `FOV`, `width`, and `height` arguments will still
+be derived from the rgl window.</p></td>
+    </tr>
+    <tr>
+      <th>background</th>
+      <td><p>Default `NULL`. Background color when `software_render = TRUE`.</p></td>
+    </tr>
+    <tr>
+      <th>text_angle</th>
+      <td><p>Default `NULL`, which forces the text always to face the camera. If a single angle (degrees),
+will specify the absolute angle all the labels are facing. If three angles, this will specify all three orientations
+(relative to the x,y, and z axes) of the text labels.</p></td>
+    </tr>
+    <tr>
+      <th>text_size</th>
+      <td><p>Default `10`. Height of the text.</p></td>
+    </tr>
+    <tr>
+      <th>text_offset</th>
+      <td><p>Default `c(0,0,0)`. Offset to be applied to all text labels.</p></td>
+    </tr>
+    <tr>
+      <th>point_radius</th>
+      <td><p>Default `2`. Radius of 3D points (rendered with `render_points()`.</p></td>
+    </tr>
+    <tr>
+      <th>line_offset</th>
+      <td><p>Default `1e-7`. Small number indicating the offset in the scene to apply to lines if using software rendering. Increase this if your lines 
+aren't showing up, or decrease it if lines are appearing through solid objects.</p></td>
+    </tr>
+    <tr>
+      <th>cache_filename</th>
+      <td><p>Default `NULL`. Name of temporary filename to store OBJ file, if the user does not want to rewrite the file each time.</p></td>
+    </tr>
+    <tr>
+      <th>print_scene_info</th>
+      <td><p>Default `FALSE`. If `TRUE`, it will print the position and lookat point of the camera.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Additional parameters to pass to magick::image_annotate.</p></td>
+      <td><p>Additional parameters to pass to `rayvertex::rasterize_scene()`.</p></td>
     </tr>
     </table>
 
@@ -232,33 +355,39 @@ before taking the snapshot. This can help stop prevent rendering issues when run
     <p>Displays snapshot of current rgl plot (or saves to disk).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>montereybay</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span>() <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='plot_3d.html'>plot_3d</a></span>(<span class='no'>montereybay</span>,<span class='kw'>zscale</span><span class='kw'>=</span><span class='fl'>50</span>,<span class='kw'>zoom</span><span class='kw'>=</span><span class='fl'>0.6</span>,<span class='kw'>theta</span><span class='kw'>=</span>-<span class='fl'>90</span>,<span class='kw'>phi</span><span class='kw'>=</span><span class='fl'>30</span>)</div><div class='input'> 
-</div><div class='input'><span class='fu'>render_snapshot</span>()</div><div class='img'><img src='render_snapshot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div><div class='input'></div><div class='input'> 
-#Create a title, but also pass the `gravity` argument to magick::image_annotate using ...
-#to center the text.
-</div><div class='input'><span class='fu'>render_snapshot</span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, California"</span>,
-               <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-               <span class='kw'>title_font</span> <span class='kw'>=</span> <span class='st'>"Helvetica"</span>, <span class='kw'>gravity</span> <span class='kw'>=</span> <span class='st'>"North"</span>)</div><div class='img'><img src='render_snapshot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='plot_3d.html'>plot_3d</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span>,zoom<span class='op'>=</span><span class='fl'>0.6</span>,theta<span class='op'>=</span><span class='op'>-</span><span class='fl'>90</span>,phi<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+<span class='co'># }</span>
+ 
+<span class='co'># \donttest{</span>
+<span class='fu'>render_snapshot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='render_snapshot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+ 
+<span class='co'>#Create a title</span>
+<span class='co'># \donttest{</span>
+<span class='fu'>render_snapshot</span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, California"</span>, title_offset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>20</span><span class='op'>)</span>,
+               title_color <span class='op'>=</span> <span class='st'>"white"</span>, title_bar_color <span class='op'>=</span> <span class='st'>"black"</span>,
+               title_font <span class='op'>=</span> <span class='st'>"Helvetica"</span>, title_position <span class='op'>=</span> <span class='st'>"north"</span><span class='op'>)</span>
+</div><div class='img'><img src='render_snapshot-2.png' alt='' width='700' height='433' /></div><div class='input'>               
 <span class='co'>#Add a vignette effect</span>
-<span class='fu'><a href='render_camera.html'>render_camera</a></span>(<span class='kw'>zoom</span><span class='kw'>=</span><span class='fl'>0.8</span>)
-<span class='fu'>render_snapshot</span>(<span class='kw'>title_text</span> <span class='kw'>=</span> <span class='st'>"Monterey Bay, California"</span>,
-               <span class='kw'>title_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>title_bar_color</span> <span class='kw'>=</span> <span class='st'>"darkgreen"</span>,
-               <span class='kw'>vignette</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-               <span class='kw'>title_font</span> <span class='kw'>=</span> <span class='st'>"Helvetica"</span>, <span class='kw'>gravity</span> <span class='kw'>=</span> <span class='st'>"North"</span>)</div><div class='img'><img src='render_snapshot-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/rgl.open'>rgl.close</a></span>()</div></pre>
+<span class='fu'><a href='render_camera.html'>render_camera</a></span><span class='op'>(</span>zoom<span class='op'>=</span><span class='fl'>0.8</span><span class='op'>)</span>
+<span class='fu'>render_snapshot</span><span class='op'>(</span>title_text <span class='op'>=</span> <span class='st'>"Monterey Bay, California"</span>, 
+               title_color <span class='op'>=</span> <span class='st'>"white"</span>, title_bar_color <span class='op'>=</span> <span class='st'>"darkgreen"</span>,
+               vignette <span class='op'>=</span> <span class='cn'>TRUE</span>, title_offset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>20</span><span class='op'>)</span>,
+               title_font <span class='op'>=</span> <span class='st'>"Helvetica"</span>, title_position <span class='op'>=</span> <span class='st'>"north"</span><span class='op'>)</span>
+</div><div class='img'><img src='render_snapshot-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>rgl</span><span class='fu'>::</span><span class='fu'><a href='https://dmurdoch.github.io/rgl/reference/rgl.open.html'>rgl.close</a></span><span class='op'>(</span><span class='op'>)</span> 
+<span class='co'># }</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -266,13 +395,16 @@ before taking the snapshot. This can help stop prevent rendering issues when run
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

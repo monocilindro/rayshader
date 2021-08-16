@@ -8,23 +8,36 @@
 
 <title>Add Overlay — add_overlay • rayshader</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,8 +48,11 @@
 
 <meta property="og:title" content="Add Overlay — add_overlay" />
 <meta property="og:description" content="Overlays an image (with a transparency layer) on the current map." />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://www.rayshader.com/reference/figures/website.jpg" />
+<meta property="og:image:alt" content="Picture of a 3D map made with rayshader" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@tylermorganwall" />
+<meta name="twitter:site" content="@tylermorganwall" />
 
 
 
@@ -51,9 +67,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -67,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
       </span>
     </div>
 
@@ -81,16 +98,19 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Rayshader Blog
+    Tutorials/Blog Posts
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
+      <a href="https://www.tylermw.com/adding-open-street-map-data-to-rayshader-maps-in-r/">Tutorial: Adding Open Street Map Data to Rayshader Maps in R</a>
     </li>
     <li>
-      <a href="https://www.tylermw.com/2018-year-in-review/">2018 Year in Review</a>
+      <a href="https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/">A Step-by-Step Guide to Making 3D Maps with Satellite Imagery in R</a>
+    </li>
+    <li>
+      <a href="https://www.tylermw.com/3d-ggplots-with-rayshader/">Introducing 3D ggplots with rayshader</a>
     </li>
     <li>
       <a href="https://www.tylermw.com/portrait-mode-data/">Portrait Mode for Data: Rayshader + Rayfocus</a>
@@ -139,6 +159,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -153,8 +174,14 @@
     <p>Overlays an image (with a transparency layer) on the current map.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_overlay</span>(<span class='no'>hillshade</span>, <span class='no'>overlay</span>, <span class='kw'>alphacolor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alphalayer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alphamethod</span> <span class='kw'>=</span> <span class='st'>"max"</span>, <span class='kw'>gamma_correction</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>add_overlay</span><span class='op'>(</span>
+  <span class='va'>hillshade</span>,
+  <span class='va'>overlay</span>,
+  alphalayer <span class='op'>=</span> <span class='fl'>1</span>,
+  alphacolor <span class='op'>=</span> <span class='cn'>NULL</span>,
+  alphamethod <span class='op'>=</span> <span class='st'>"max"</span>,
+  rescale_original <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,24 +196,24 @@
 If the array is 3D, `alphacolor` should also be passed to indicate transparent regions.</p></td>
     </tr>
     <tr>
-      <th>alphacolor</th>
-      <td><p>Default `NULL`. If `overlay` is a 3-layer array, this argument tells which color is interpretted as completely transparent.</p></td>
-    </tr>
-    <tr>
       <th>alphalayer</th>
       <td><p>Default `1`. Defines minimum tranparaency of layer. If transparency already exists in `overlay`, the way `add_overlay` combines 
 the two is determined in argument `alphamethod`.</p></td>
     </tr>
     <tr>
-      <th>alphamethod</th>
-      <td><p>Default `max`. Method for dealing with pre-existing transparency with `layeralpha`. 
-If `max`, converts all alpha levels higher than `layeralpha` to the value set in `layeralpha`.
-If `multiply`, multiples all pre-existing alpha values with `layeralpha`.
-If `none`, keeps existing tranparencies and only changes opaque entries.</p></td>
+      <th>alphacolor</th>
+      <td><p>Default `NULL`. If `overlay` is a 3-layer array, this argument tells which color is interpretted as completely transparent.</p></td>
     </tr>
     <tr>
-      <th>gamma_correction</th>
-      <td><p>Default `TRUE`. Controls gamma correction when adding colors. Default exponent of 2.2.</p></td>
+      <th>alphamethod</th>
+      <td><p>Default `max`. Method for dealing with pre-existing transparency with `layeralpha`. 
+If `max`, converts all alpha levels higher than `layeralpha` to the value set in `layeralpha`. Otherwise,
+this just sets all transparency to `layeralpha`.</p></td>
+    </tr>
+    <tr>
+      <th>rescale_original</th>
+      <td><p>Default `FALSE`. If `TRUE`, `hillshade` will be scaled to match the dimensions of `overlay` (instead of
+the other way around).</p></td>
     </tr>
     </table>
 
@@ -195,39 +222,35 @@ If `none`, keeps existing tranparencies and only changes opaque entries.</p></td
     <p>Hillshade with overlay.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Here, we overlay a base R elevation plot with our raytraced shadow layer:</span>
+    <pre class="examples"><div class='input'><span class='co'>#Only run these examples if the `magick` package is installed.</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'>#Combining base R plotting with rayshader's spherical color mapping and raytracing:</span>
+<span class='co'># \donttest{</span>
+<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span>,alphalayer <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># }</span>
 
-<span class='no'>fliplr</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
- <span class='no'>x</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>x</span>):<span class='fl'>1</span>]
-}</div><div class='input'><span class='no'>tempfilename</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>()
-<span class='no'>old.par</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>no.readonly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/on.exit'>on.exit</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='no'>old.par</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/png'>png</a></span>(<span class='no'>tempfilename</span>,<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>401</span>,<span class='kw'>height</span><span class='kw'>=</span><span class='fl'>401</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>))
-<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/image'>image</a></span>(<span class='fu'><a href='fliplr.html'>fliplr</a></span>(<span class='no'>montereybay</span>),<span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,<span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/palettes'>terrain.colors</a></span>(<span class='fl'>1000</span>)))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/dev'>dev.off</a></span>()</div><div class='output co'>#&gt; pdf 
-#&gt;   2 </div><div class='input'><span class='no'>tempmap</span> <span class='kw'>=</span> <span class='kw pkg'>png</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/png/topics/readPNG'>readPNG</a></span>(<span class='no'>tempfilename</span>)</div><div class='input'>
-</div><div class='input'><span class='no'>montereybay</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='ray_shade.html'>ray_shade</a></span>(<span class='kw'>zscale</span><span class='kw'>=</span><span class='fl'>50</span>,<span class='kw'>maxsearch</span> <span class='kw'>=</span> <span class='fl'>500</span>,<span class='kw'>anglebreaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>0.1</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>add_overlay</span>(<span class='no'>tempmap</span>,<span class='kw'>alphalayer</span> <span class='kw'>=</span> <span class='fl'>0.5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span>()</div><div class='img'><img src='add_overlay-1.png' alt='' width='700' height='433' /></div><div class='input'>
-#Combining base R plotting with rayshader's spherical color mapping and raytracing:
-</div><div class='input'><span class='no'>montereybay</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>add_overlay</span>(<span class='no'>tempmap</span>,<span class='kw'>alphalayer</span> <span class='kw'>=</span> <span class='fl'>0.4</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span>(<span class='fu'><a href='ray_shade.html'>ray_shade</a></span>(<span class='no'>montereybay</span>,<span class='kw'>zscale</span><span class='kw'>=</span><span class='fl'>50</span>,<span class='kw'>maxsearch</span> <span class='kw'>=</span> <span class='fl'>500</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span>()</div><div class='img'><img src='add_overlay-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># \donttest{</span>
+<span class='co'>#Add contours with `generate_contour_overlay()`</span>
+<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='generate_contour_overlay.html'>generate_contour_overlay</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># }</span>
+<span class='op'>}</span>
+</div><div class='img'><img src='add_overlay-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='add_overlay-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -235,13 +258,16 @@ If `none`, keeps existing tranparencies and only changes opaque entries.</p></td
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
