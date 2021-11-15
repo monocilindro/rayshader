@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -241,51 +241,55 @@ this will give a continuous mapping.</p></td>
     <p>Image overlay representing the input polygon data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Plot the counties around Monterey Bay, CA</span>
-<span class='co'>#Only run these examples if the `magick` package is installed.</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># \donttest{</span>
-<span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, palette <span class='op'>=</span> <span class='va'>rainbow</span>, 
-                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span> 
-
-<span class='co'>#These counties include the water, so we'll plot bathymetry data over the polygon</span>
-<span class='co'>#data to only include parts of the polygon that fall on land.</span>
-<span class='va'>water_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"darkblue"</span>, <span class='st'>"dodgerblue"</span>, <span class='st'>"lightblue"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span>
-<span class='va'>bathy_hs</span> <span class='op'>=</span> <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>, texture <span class='op'>=</span> <span class='va'>water_palette</span><span class='op'>)</span>
-
-<span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, palette <span class='op'>=</span> <span class='va'>rainbow</span>, 
-                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Add a semi-transparent hillshade and change the palette, and remove the polygon lines</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span>texture <span class='op'>=</span> <span class='st'>"bw"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, 
-                        palette <span class='op'>=</span> <span class='va'>terrain.colors</span>, linewidth<span class='op'>=</span><span class='cn'>NA</span>,
-                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span>,
-                        alphalayer<span class='op'>=</span><span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Map one of the variables in the sf object and use an explicitly defined color palette</span>
-<span class='va'>county_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"087"</span> <span class='op'>=</span> <span class='st'>"red"</span>,    <span class='st'>"053"</span> <span class='op'>=</span> <span class='st'>"blue"</span>,   <span class='st'>"081"</span> <span class='op'>=</span> <span class='st'>"green"</span>, 
-                  <span class='st'>"069"</span> <span class='op'>=</span> <span class='st'>"yellow"</span>, <span class='st'>"085"</span> <span class='op'>=</span> <span class='st'>"orange"</span>, <span class='st'>"099"</span> <span class='op'>=</span> <span class='st'>"purple"</span><span class='op'>)</span> 
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span>texture <span class='op'>=</span> <span class='st'>"bw"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, linecolor<span class='op'>=</span><span class='st'>"white"</span>, linewidth<span class='op'>=</span><span class='fl'>3</span>,
-                        palette <span class='op'>=</span> <span class='va'>county_palette</span>, data_column_fill <span class='op'>=</span> <span class='st'>"COUNTYFP"</span>,
-                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span>,
-                        alphalayer<span class='op'>=</span><span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-<span class='op'>}</span>
-</div><div class='img'><img src='generate_polygon_overlay-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_polygon_overlay-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_polygon_overlay-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_polygon_overlay-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>#Plot the counties around Monterey Bay, CA</span></span>
+<span class='r-in'><span class='co'>#Only run these examples if the `magick` package is installed.</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, palette <span class='op'>=</span> <span class='va'>rainbow</span>, </span>
+<span class='r-in'>                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#These counties include the water, so we'll plot bathymetry data over the polygon</span></span>
+<span class='r-in'><span class='co'>#data to only include parts of the polygon that fall on land.</span></span>
+<span class='r-in'><span class='va'>water_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"darkblue"</span>, <span class='st'>"dodgerblue"</span>, <span class='st'>"lightblue"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bathy_hs</span> <span class='op'>=</span> <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>, texture <span class='op'>=</span> <span class='va'>water_palette</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, palette <span class='op'>=</span> <span class='va'>rainbow</span>, </span>
+<span class='r-in'>                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Add a semi-transparent hillshade and change the palette, and remove the polygon lines</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span>texture <span class='op'>=</span> <span class='st'>"bw"</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, </span>
+<span class='r-in'>                        palette <span class='op'>=</span> <span class='va'>terrain.colors</span>, linewidth<span class='op'>=</span><span class='cn'>NA</span>,</span>
+<span class='r-in'>                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span>,</span>
+<span class='r-in'>                        alphalayer<span class='op'>=</span><span class='fl'>0.7</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Map one of the variables in the sf object and use an explicitly defined color palette</span></span>
+<span class='r-in'><span class='va'>county_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"087"</span> <span class='op'>=</span> <span class='st'>"red"</span>,    <span class='st'>"053"</span> <span class='op'>=</span> <span class='st'>"blue"</span>,   <span class='st'>"081"</span> <span class='op'>=</span> <span class='st'>"green"</span>, </span>
+<span class='r-in'>                  <span class='st'>"069"</span> <span class='op'>=</span> <span class='st'>"yellow"</span>, <span class='st'>"085"</span> <span class='op'>=</span> <span class='st'>"orange"</span>, <span class='st'>"099"</span> <span class='op'>=</span> <span class='st'>"purple"</span><span class='op'>)</span> </span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span>texture <span class='op'>=</span> <span class='st'>"bw"</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_polygon_overlay</span><span class='op'>(</span><span class='va'>monterey_counties_sf</span>, linecolor<span class='op'>=</span><span class='st'>"white"</span>, linewidth<span class='op'>=</span><span class='fl'>3</span>,</span>
+<span class='r-in'>                        palette <span class='op'>=</span> <span class='va'>county_palette</span>, data_column_fill <span class='op'>=</span> <span class='st'>"COUNTYFP"</span>,</span>
+<span class='r-in'>                        extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span><span class='op'>)</span>,</span>
+<span class='r-in'>                        alphalayer<span class='op'>=</span><span class='fl'>0.7</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, start_transition <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0.5</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-plt img'><img src='generate_polygon_overlay-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_polygon_overlay-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_polygon_overlay-3.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_polygon_overlay-4.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

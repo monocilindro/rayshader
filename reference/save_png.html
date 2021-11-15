@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -252,19 +252,19 @@ lat/long at higher latitudes to the correct the aspect ratio.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>filename_map</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Save the map into `filename_map`</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'>save_png</span><span class='op'>(</span><span class='va'>filename_map</span><span class='op'>)</span>
- 
-<span class='co'>#Rotate the map 180 degrees:</span>
-
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'>save_png</span><span class='op'>(</span><span class='va'>filename_map</span>,rotate<span class='op'>=</span><span class='fl'>180</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>filename_map</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Save the map into `filename_map`</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>save_png</span><span class='op'>(</span><span class='va'>filename_map</span><span class='op'>)</span></span>
+<span class='r-in'> </span>
+<span class='r-in'><span class='co'>#Rotate the map 180 degrees:</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>save_png</span><span class='op'>(</span><span class='va'>filename_map</span>,rotate<span class='op'>=</span><span class='fl'>180</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -85,7 +85,7 @@ lowering the brightness at each point for each ray that intersects the surface."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -259,33 +259,37 @@ Use this instead of `sunaltitude` to create a softer shadow by specifying a wide
     <p>Matrix of light intensities at each point.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#First we ray trace the Monterey Bay dataset.</span>
-<span class='co'>#The default angle is from 40-50 degrees azimuth, from the north east.</span>
-<span class='co'># \donttest{</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='ray_shade-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-<span class='co'>#Change the altitude of the sun to 25 degrees</span>
-<span class='co'># \donttest{</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='ray_shade-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-<span class='co'>#Remove the lambertian shading to just calculate shadow intensity.</span>
-<span class='co'># \donttest{</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span>, lambert<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='ray_shade-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-
-<span class='co'>#Change the direction of the sun to the South East</span>
-<span class='co'># \donttest{</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span>, sunangle<span class='op'>=</span><span class='fl'>225</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='ray_shade-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>#First we ray trace the Monterey Bay dataset.</span></span>
+<span class='r-in'><span class='co'>#The default angle is from 40-50 degrees azimuth, from the north east.</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ray_shade-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='co'>#Change the altitude of the sun to 25 degrees</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ray_shade-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='co'>#Remove the lambertian shading to just calculate shadow intensity.</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span>, lambert<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ray_shade-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the direction of the sun to the South East</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'>ray_shade</span><span class='op'>(</span>zscale<span class='op'>=</span><span class='fl'>50</span>, sunaltitude<span class='op'>=</span><span class='fl'>25</span>, sunangle<span class='op'>=</span><span class='fl'>225</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='ray_shade-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

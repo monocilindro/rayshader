@@ -88,7 +88,7 @@ the `return_distance_matrix` argument to `TRUE`." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -291,70 +291,80 @@ contour lines.</p></td>
     <p>4-layer RGB array representing the waterline overlay.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Only run these examples if the `magick` package is installed.</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># \donttest{</span>
-<span class='co'>#Create a flat body of water for Monterey Bay</span>
-<span class='va'>montbay</span> <span class='op'>=</span> <span class='va'>montereybay</span>
-<span class='va'>montbay</span><span class='op'>[</span><span class='va'>montbay</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
-
-<span class='co'>#Generate base map with no lines</span>
-<span class='va'>basemap</span> <span class='op'>=</span> <span class='va'>montbay</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_water.html'>add_water</a></span><span class='op'>(</span><span class='fu'><a href='detect_water.html'>detect_water</a></span><span class='op'>(</span><span class='va'>montbay</span><span class='op'>)</span>, color<span class='op'>=</span><span class='st'>"dodgerblue"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='texture_shade.html'>texture_shade</a></span><span class='op'>(</span><span class='va'>montbay</span>, detail<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>3</span>, brightness <span class='op'>=</span> <span class='fl'>15</span>, contrast <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='lamb_shade.html'>lamb_shade</a></span><span class='op'>(</span><span class='va'>montbay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> 
-
-<span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='va'>basemap</span><span class='op'>)</span>
-
-<span class='co'>#Add waterlines</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change minimum line distance:</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, min <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change maximum line distance</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, max <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Smooth waterlines</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, max <span class='op'>=</span> <span class='fl'>0.4</span>, smooth<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Increase number of breaks</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, breaks <span class='op'>=</span> <span class='fl'>20</span>, max<span class='op'>=</span><span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Make lines evenly spaced:</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, evenly_spaced <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change variable distance between each line</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, falloff<span class='op'>=</span><span class='fl'>1.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Turn off fading</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, fade<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Fill up the entire body of water with lines and make them all 50% transparent</span>
-<span class='va'>basemap</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, fade<span class='op'>=</span><span class='cn'>FALSE</span>, max<span class='op'>=</span><span class='fl'>1</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span>, color<span class='op'>=</span><span class='st'>"white"</span>,
-                                         evenly_spaced <span class='op'>=</span> <span class='cn'>TRUE</span>, breaks<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-<span class='op'>}</span>
-</div><div class='img'><img src='generate_waterline_overlay-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_waterline_overlay-10.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>#Only run these examples if the `magick` package is installed.</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#Create a flat body of water for Monterey Bay</span></span>
+<span class='r-in'><span class='va'>montbay</span> <span class='op'>=</span> <span class='va'>montereybay</span></span>
+<span class='r-in'><span class='va'>montbay</span><span class='op'>[</span><span class='va'>montbay</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Generate base map with no lines</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'>=</span> <span class='va'>montbay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_water.html'>add_water</a></span><span class='op'>(</span><span class='fu'><a href='detect_water.html'>detect_water</a></span><span class='op'>(</span><span class='va'>montbay</span><span class='op'>)</span>, color<span class='op'>=</span><span class='st'>"dodgerblue"</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='texture_shade.html'>texture_shade</a></span><span class='op'>(</span><span class='va'>montbay</span>, detail<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>3</span>, brightness <span class='op'>=</span> <span class='fl'>15</span>, contrast <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='lamb_shade.html'>lamb_shade</a></span><span class='op'>(</span><span class='va'>montbay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0</span><span class='op'>)</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='va'>basemap</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Add waterlines</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change minimum line distance:</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, min <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change maximum line distance</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, max <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Smooth waterlines</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, max <span class='op'>=</span> <span class='fl'>0.4</span>, smooth<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Increase number of breaks</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, breaks <span class='op'>=</span> <span class='fl'>20</span>, max<span class='op'>=</span><span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Make lines evenly spaced:</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, evenly_spaced <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change variable distance between each line</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, falloff<span class='op'>=</span><span class='fl'>1.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Turn off fading</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, fade<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Fill up the entire body of water with lines and make them all 50% transparent</span></span>
+<span class='r-in'><span class='va'>basemap</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_waterline_overlay</span><span class='op'>(</span><span class='va'>montbay</span>, fade<span class='op'>=</span><span class='cn'>FALSE</span>, max<span class='op'>=</span><span class='fl'>1</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span>, color<span class='op'>=</span><span class='st'>"white"</span>,</span>
+<span class='r-in'>                                         evenly_spaced <span class='op'>=</span> <span class='cn'>TRUE</span>, breaks<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-3.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-4.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-5.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-6.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-7.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-8.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-9.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_waterline_overlay-10.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

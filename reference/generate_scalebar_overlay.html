@@ -88,7 +88,7 @@ scale bar of the proper length." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -354,113 +354,122 @@ of this color.</p></td>
     <p>Semi-transparent overlay with a scale bar.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Only run these examples if the `magick` package is installed.</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># \donttest{</span>
-<span class='co'>#Create the water palette</span>
-<span class='va'>water_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"darkblue"</span>, <span class='st'>"dodgerblue"</span>, <span class='st'>"lightblue"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span>
-<span class='va'>bathy_hs</span> <span class='op'>=</span> <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>, texture <span class='op'>=</span> <span class='va'>water_palette</span><span class='op'>)</span>
-
-<span class='co'>#Generate flat water heightmap</span>
-<span class='va'>mbay</span> <span class='op'>=</span> <span class='va'>montereybay</span>
-<span class='va'>mbay</span><span class='op'>[</span><span class='va'>mbay</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
-
-<span class='va'>base_map</span> <span class='op'>=</span> <span class='va'>mbay</span> <span class='op'>%&gt;%</span>
-<span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
-<span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='lamb_shade.html'>lamb_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0.3</span><span class='op'>)</span>
-
-<span class='co'>#For convenience, the extent of the montereybay dataset is included as an attribute</span>
-<span class='va'>mb_extent</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>, <span class='st'>"extent"</span><span class='op'>)</span>
-
-<span class='co'>#Add a scalebar</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
-<span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,
-                                      heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                      latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-
-<span class='co'>#Change the text color</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,
-                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-
-<span class='co'>#Change the length</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,
-                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change the thickness (default is length/20)</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,
-                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, thickness <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>/</span><span class='fl'>10</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change the text offset (given in multiples of thickness)</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,
-                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, thickness <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>/</span><span class='fl'>10</span>,
-                                       text_offset <span class='op'>=</span> <span class='fl'>0.75</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change the primary and secondary colors, along with the border and tick color</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,
-                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, border_color <span class='op'>=</span> <span class='st'>"white"</span>,
-                                       tick_color <span class='op'>=</span> <span class='st'>"white"</span>,
-                                       color1 <span class='op'>=</span> <span class='st'>"darkolivegreen4"</span>, color2 <span class='op'>=</span> <span class='st'>"burlywood3"</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Add a halo</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,
-                                       halo_color <span class='op'>=</span> <span class='st'>"white"</span>, halo_expand <span class='op'>=</span> <span class='fl'>1</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>#Change the orientation, position, text alignment, and flip the ticks to the other side</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>, x <span class='op'>=</span> <span class='fl'>0.07</span>,
-                                       bearing<span class='op'>=</span><span class='fl'>0</span>, adj <span class='op'>=</span> <span class='fl'>0</span>, flip_ticks <span class='op'>=</span> <span class='cn'>TRUE</span>,
-                                       halo_color <span class='op'>=</span> <span class='st'>"white"</span>, halo_expand <span class='op'>=</span> <span class='fl'>1.5</span>,
-                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, 
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
- 
- 
-<span class='co'>#64373.8 meters in 40 miles</span>
-<span class='co'>#Create custom labels, change font and text size, remove the border/ticks, and change the color</span>
-<span class='co'>#Here, we specify a width and height to double the resolution of the image (for sharper text)</span>
-<span class='va'>base_map</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>64373.8</span>, x <span class='op'>=</span> <span class='fl'>0.07</span>,
-                                       labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"0"</span>, <span class='st'>"20"</span>, <span class='st'>"40 miles"</span><span class='op'>)</span>, thickness<span class='op'>=</span><span class='fl'>2500</span>,
-                                       text_size<span class='op'>=</span><span class='fl'>3</span>, font <span class='op'>=</span> <span class='fl'>2</span>, text_offset <span class='op'>=</span> <span class='fl'>0</span>,
-                                       text_color<span class='op'>=</span><span class='st'>"white"</span>, color2<span class='op'>=</span><span class='st'>"#bf323b"</span>, border_color<span class='op'>=</span><span class='cn'>NA</span>,
-                                       tick_color<span class='op'>=</span><span class='st'>"red"</span>, tick_width<span class='op'>=</span><span class='fl'>0</span>,
-                                       bearing<span class='op'>=</span><span class='fl'>0</span>, adj <span class='op'>=</span> <span class='fl'>0</span>, flip_ticks <span class='op'>=</span> <span class='cn'>TRUE</span>,
-                                       halo_color<span class='op'>=</span><span class='st'>"black"</span>, halo_blur<span class='op'>=</span><span class='fl'>3</span>, halo_alpha<span class='op'>=</span><span class='fl'>0.5</span>,
-                                       width <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span>,
-                                       height <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span>,
-                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, rescale_original<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-<span class='op'>}</span>
-</div><div class='img'><img src='generate_scalebar_overlay-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-8.png' alt='' width='700' height='433' /></div><div class='img'><img src='generate_scalebar_overlay-9.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>#Only run these examples if the `magick` package is installed.</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#Create the water palette</span></span>
+<span class='r-in'><span class='va'>water_palette</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"darkblue"</span>, <span class='st'>"dodgerblue"</span>, <span class='st'>"lightblue"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bathy_hs</span> <span class='op'>=</span> <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>, texture <span class='op'>=</span> <span class='va'>water_palette</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Generate flat water heightmap</span></span>
+<span class='r-in'><span class='va'>mbay</span> <span class='op'>=</span> <span class='va'>montereybay</span></span>
+<span class='r-in'><span class='va'>mbay</span><span class='op'>[</span><span class='va'>mbay</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'>=</span> <span class='va'>mbay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'><span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'><span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'><a href='generate_altitude_overlay.html'>generate_altitude_overlay</a></span><span class='op'>(</span><span class='va'>bathy_hs</span>, <span class='va'>montereybay</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'><span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='lamb_shade.html'>lamb_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>,<span class='fl'>0.3</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#For convenience, the extent of the montereybay dataset is included as an attribute</span></span>
+<span class='r-in'><span class='va'>mb_extent</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>, <span class='st'>"extent"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Add a scalebar</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'><span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,</span>
+<span class='r-in'>                                      heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                      latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'><span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the text color</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,</span>
+<span class='r-in'>                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the length</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,</span>
+<span class='r-in'>                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the thickness (default is length/20)</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,</span>
+<span class='r-in'>                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, thickness <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>/</span><span class='fl'>10</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the text offset (given in multiples of thickness)</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,</span>
+<span class='r-in'>                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, thickness <span class='op'>=</span> <span class='fl'>30000</span><span class='op'>/</span><span class='fl'>10</span>,</span>
+<span class='r-in'>                                       text_offset <span class='op'>=</span> <span class='fl'>0.75</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the primary and secondary colors, along with the border and tick color</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>30000</span>,</span>
+<span class='r-in'>                                       text_color <span class='op'>=</span> <span class='st'>"white"</span>, border_color <span class='op'>=</span> <span class='st'>"white"</span>,</span>
+<span class='r-in'>                                       tick_color <span class='op'>=</span> <span class='st'>"white"</span>,</span>
+<span class='r-in'>                                       color1 <span class='op'>=</span> <span class='st'>"darkolivegreen4"</span>, color2 <span class='op'>=</span> <span class='st'>"burlywood3"</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Add a halo</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>,</span>
+<span class='r-in'>                                       halo_color <span class='op'>=</span> <span class='st'>"white"</span>, halo_expand <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Change the orientation, position, text alignment, and flip the ticks to the other side</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>40000</span>, x <span class='op'>=</span> <span class='fl'>0.07</span>,</span>
+<span class='r-in'>                                       bearing<span class='op'>=</span><span class='fl'>0</span>, adj <span class='op'>=</span> <span class='fl'>0</span>, flip_ticks <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>                                       halo_color <span class='op'>=</span> <span class='st'>"white"</span>, halo_expand <span class='op'>=</span> <span class='fl'>1.5</span>,</span>
+<span class='r-in'>                                       heightmap <span class='op'>=</span> <span class='va'>montereybay</span>, </span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'> </span>
+<span class='r-in'> </span>
+<span class='r-in'><span class='co'>#64373.8 meters in 40 miles</span></span>
+<span class='r-in'><span class='co'>#Create custom labels, change font and text size, remove the border/ticks, and change the color</span></span>
+<span class='r-in'><span class='co'>#Here, we specify a width and height to double the resolution of the image (for sharper text)</span></span>
+<span class='r-in'><span class='va'>base_map</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='add_overlay.html'>add_overlay</a></span><span class='op'>(</span><span class='fu'>generate_scalebar_overlay</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='va'>mb_extent</span>, length <span class='op'>=</span> <span class='fl'>64373.8</span>, x <span class='op'>=</span> <span class='fl'>0.07</span>,</span>
+<span class='r-in'>                                       labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"0"</span>, <span class='st'>"20"</span>, <span class='st'>"40 miles"</span><span class='op'>)</span>, thickness<span class='op'>=</span><span class='fl'>2500</span>,</span>
+<span class='r-in'>                                       text_size<span class='op'>=</span><span class='fl'>3</span>, font <span class='op'>=</span> <span class='fl'>2</span>, text_offset <span class='op'>=</span> <span class='fl'>0</span>,</span>
+<span class='r-in'>                                       text_color<span class='op'>=</span><span class='st'>"white"</span>, color2<span class='op'>=</span><span class='st'>"#bf323b"</span>, border_color<span class='op'>=</span><span class='cn'>NA</span>,</span>
+<span class='r-in'>                                       tick_color<span class='op'>=</span><span class='st'>"red"</span>, tick_width<span class='op'>=</span><span class='fl'>0</span>,</span>
+<span class='r-in'>                                       bearing<span class='op'>=</span><span class='fl'>0</span>, adj <span class='op'>=</span> <span class='fl'>0</span>, flip_ticks <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>                                       halo_color<span class='op'>=</span><span class='st'>"black"</span>, halo_blur<span class='op'>=</span><span class='fl'>3</span>, halo_alpha<span class='op'>=</span><span class='fl'>0.5</span>,</span>
+<span class='r-in'>                                       width <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span>,</span>
+<span class='r-in'>                                       height <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span>,</span>
+<span class='r-in'>                                       latlong<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, rescale_original<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-3.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-4.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-5.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-6.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-7.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-8.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='generate_scalebar_overlay-9.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

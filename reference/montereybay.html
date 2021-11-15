@@ -86,7 +86,7 @@ from the NOAA National Map website." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -190,20 +190,21 @@ coordinate is 200 meters (zscale = 200). Water level is 0. Raster extent located
     <p>https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ngdc.mgg.dem:3544/html</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># This is the full code (commented out) used to generate this dataset from the original NOAA data:</span>
-<span class='co'>#raster::raster("monterey_13_navd88_2012.nc")</span>
-<span class='co'>#bottom_left = c(y=-122.366765, x=36.179392)</span>
-<span class='co'>#top_right   = c(y=-121.366765, x=37.179392) </span>
-<span class='co'>#extent_latlong = sp::SpatialPoints(rbind(bottom_left, top_right), </span>
-<span class='co'>#                 proj4string=sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))</span>
-<span class='co'>#monterey_cropped = raster::crop(montbay,extent_latlong)</span>
-<span class='co'>#montbay_mat = raster_to_matrix(montbay_cropped)</span>
-<span class='co'>#montereybay = resize_matrix(montbay_mat,0.05)</span>
-<span class='co'>#attr(montereybay, "extent") = extent_latlong</span>
-<span class='co'>#attr(montereybay, "crs") = crs(monterey_cropped)</span>
-<span class='co'>#attr(montereybay, "crs") = crs(monterey_cropped)</span>
-<span class='co'>#attr(montereybay, "rayshader_data") = TRUE</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># This is the full code (commented out) used to generate this dataset from the original NOAA data:</span></span>
+<span class='r-in'><span class='co'>#raster::raster("monterey_13_navd88_2012.nc")</span></span>
+<span class='r-in'><span class='co'>#bottom_left = c(y=-122.366765, x=36.179392)</span></span>
+<span class='r-in'><span class='co'>#top_right   = c(y=-121.366765, x=37.179392) </span></span>
+<span class='r-in'><span class='co'>#extent_latlong = sp::SpatialPoints(rbind(bottom_left, top_right), </span></span>
+<span class='r-in'><span class='co'>#                 proj4string=sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))</span></span>
+<span class='r-in'><span class='co'>#monterey_cropped = raster::crop(montbay,extent_latlong)</span></span>
+<span class='r-in'><span class='co'>#montbay_mat = raster_to_matrix(montbay_cropped)</span></span>
+<span class='r-in'><span class='co'>#montereybay = resize_matrix(montbay_mat,0.05)</span></span>
+<span class='r-in'><span class='co'>#attr(montereybay, "extent") = extent_latlong</span></span>
+<span class='r-in'><span class='co'>#attr(montereybay, "crs") = crs(monterey_cropped)</span></span>
+<span class='r-in'><span class='co'>#attr(montereybay, "crs") = crs(monterey_cropped)</span></span>
+<span class='r-in'><span class='co'>#attr(montereybay, "rayshader_data") = TRUE</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

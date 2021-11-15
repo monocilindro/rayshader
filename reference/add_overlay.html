@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -222,27 +222,29 @@ the other way around).</p></td>
     <p>Hillshade with overlay.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Only run these examples if the `magick` package is installed.</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>#Combining base R plotting with rayshader's spherical color mapping and raytracing:</span>
-<span class='co'># \donttest{</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span>,alphalayer <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-
-<span class='co'># \donttest{</span>
-<span class='co'>#Add contours with `generate_contour_overlay()`</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='generate_contour_overlay.html'>generate_contour_overlay</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-<span class='op'>}</span>
-</div><div class='img'><img src='add_overlay-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='add_overlay-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>#Only run these examples if the `magick` package is installed.</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span><span class='st'>"magick"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'>#Combining base R plotting with rayshader's spherical color mapping and raytracing:</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span>,alphalayer <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span>  <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#Add contours with `generate_contour_overlay()`</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='height_shade.html'>height_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_overlay</span><span class='op'>(</span><span class='fu'><a href='generate_contour_overlay.html'>generate_contour_overlay</a></span><span class='op'>(</span><span class='va'>montereybay</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_shadow.html'>add_shadow</a></span><span class='op'>(</span><span class='fu'><a href='ray_shade.html'>ray_shade</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='plot_map.html'>plot_map</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-plt img'><img src='add_overlay-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='add_overlay-2.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

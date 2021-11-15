@@ -86,7 +86,7 @@ above the heightmap. If the points goes off the edge, the nearest height on the 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rayshader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.4</span>
       </span>
     </div>
 
@@ -240,69 +240,73 @@ All points are assumed to be evenly spaced.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>#Starting at Moss Landing in Monterey Bay, we are going to simulate a flight of a bird going</span>
-<span class='co'>#out to sea and diving for food.</span>
-
-<span class='co'>#First, create simulated lat/long data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2009</span><span class='op'>)</span>
-<span class='va'>moss_landing_coord</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>36.806807</span>, <span class='op'>-</span><span class='fl'>121.793332</span><span class='op'>)</span>
-<span class='va'>x_vel_out</span> <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.001</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>]</span><span class='op'>/</span><span class='fl'>1000</span>
-<span class='va'>y_vel_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>]</span><span class='op'>/</span><span class='fl'>200</span>
-<span class='va'>z_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2000</span>,length.out <span class='op'>=</span> <span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2000</span>,<span class='fl'>0</span>,length.out<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>,
-         <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2000</span>,length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2000</span>,<span class='fl'>0</span>,length.out<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>bird_track_lat</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>bird_track_long</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
-<span class='va'>bird_track_long</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
-<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>y_vel_out</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>
-<span class='va'>bird_track_long</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>bird_track_long</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>x_vel_out</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>
-<span class='op'>}</span>
-
-
-<span class='co'>#Render the 3D map</span>
-<span class='va'>montereybay</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='plot_3d.html'>plot_3d</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span>,water<span class='op'>=</span><span class='cn'>TRUE</span>,
-         shadowcolor<span class='op'>=</span><span class='st'>"#40310a"</span>, background <span class='op'>=</span> <span class='st'>"tan"</span>,
-         theta<span class='op'>=</span><span class='fl'>210</span>,  phi<span class='op'>=</span><span class='fl'>22</span>, zoom<span class='op'>=</span><span class='fl'>0.20</span>, fov<span class='op'>=</span><span class='fl'>55</span><span class='op'>)</span>
-
-<span class='co'>#Pass in the extent of the underlying raster (stored in an attribute for the montereybay</span>
-<span class='co'>#dataset) and the latitudes, longitudes, and altitudes of the track.</span>
-<span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, 
-             lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_long</span><span class='op'>)</span>, 
-             altitude <span class='op'>=</span> <span class='va'>z_out</span>, zscale<span class='op'>=</span><span class='fl'>50</span>,color<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span>
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='render_points-1.png' alt='' width='700' height='433' /></div><div class='input'>    
-<span class='co'>#We'll set the altitude to zero to give the tracks a "shadow" over the water. </span>
-<span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, 
-             lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_long</span><span class='op'>)</span>, 
-             altitude <span class='op'>=</span> <span class='fl'>0</span>, zscale<span class='op'>=</span><span class='fl'>50</span>, color<span class='op'>=</span><span class='st'>"black"</span><span class='op'>)</span>
-<span class='fu'><a href='render_camera.html'>render_camera</a></span><span class='op'>(</span>theta<span class='op'>=</span><span class='fl'>30</span>,phi<span class='op'>=</span><span class='fl'>35</span>,zoom<span class='op'>=</span><span class='fl'>0.45</span>,fov<span class='op'>=</span><span class='fl'>70</span><span class='op'>)</span>
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='render_points-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>#Remove the points:</span>
-<span class='fu'>render_points</span><span class='op'>(</span>clear_previous<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'># Finally, we can also plot just GPS coordinates offset from the surface by leaving altitude `NULL`</span>
-<span class='co'># Here we plot a circle of values surrounding Moss Landing. This requires the original heightmap.</span>
-
-<span class='va'>t</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span>,length.out<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
-<span class='va'>circle_coords_lat</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>0.3</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
-<span class='va'>circle_coords_long</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>0.3</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
-<span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span>,
-           lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>circle_coords_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>circle_coords_long</span><span class='op'>)</span>, 
-           zscale<span class='op'>=</span><span class='fl'>50</span>, color<span class='op'>=</span><span class='st'>"red"</span>, offset<span class='op'>=</span><span class='fl'>100</span>, size<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'><a href='render_camera.html'>render_camera</a></span><span class='op'>(</span>theta <span class='op'>=</span> <span class='fl'>160</span>, phi<span class='op'>=</span><span class='fl'>33</span>, zoom<span class='op'>=</span><span class='fl'>0.4</span>, fov<span class='op'>=</span><span class='fl'>55</span><span class='op'>)</span>
-<span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='render_points-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>#And all of these work with `render_highquality()`</span>
-<span class='fu'><a href='render_highquality.html'>render_highquality</a></span><span class='op'>(</span>point_radius <span class='op'>=</span> <span class='fl'>3</span>, clamp_value<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
-</div><div class='img'><img src='render_points-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>rgl</span><span class='fu'>::</span><span class='fu'><a href='https://dmurdoch.github.io/rgl/dev/reference/rgl.open.html'>rgl.close</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#Starting at Moss Landing in Monterey Bay, we are going to simulate a flight of a bird going</span></span>
+<span class='r-in'><span class='co'>#out to sea and diving for food.</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#First, create simulated lat/long data</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2009</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>moss_landing_coord</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>36.806807</span>, <span class='op'>-</span><span class='fl'>121.793332</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x_vel_out</span> <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.001</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>]</span><span class='op'>/</span><span class='fl'>1000</span></span>
+<span class='r-in'><span class='va'>y_vel_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>]</span><span class='op'>/</span><span class='fl'>200</span></span>
+<span class='r-in'><span class='va'>z_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2000</span>,length.out <span class='op'>=</span> <span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2000</span>,<span class='fl'>0</span>,length.out<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>         <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2000</span>,length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2000</span>,<span class='fl'>0</span>,length.out<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>bird_track_lat</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bird_track_long</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>bird_track_long</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span></span>
+<span class='r-in'><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>300</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>bird_track_lat</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>y_vel_out</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>bird_track_long</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>bird_track_long</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>x_vel_out</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Render the 3D map</span></span>
+<span class='r-in'><span class='va'>montereybay</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='sphere_shade.html'>sphere_shade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'> <span class='fu'><a href='plot_3d.html'>plot_3d</a></span><span class='op'>(</span><span class='va'>montereybay</span>,zscale<span class='op'>=</span><span class='fl'>50</span>,water<span class='op'>=</span><span class='cn'>TRUE</span>,</span>
+<span class='r-in'>         shadowcolor<span class='op'>=</span><span class='st'>"#40310a"</span>, background <span class='op'>=</span> <span class='st'>"tan"</span>,</span>
+<span class='r-in'>         theta<span class='op'>=</span><span class='fl'>210</span>,  phi<span class='op'>=</span><span class='fl'>22</span>, zoom<span class='op'>=</span><span class='fl'>0.20</span>, fov<span class='op'>=</span><span class='fl'>55</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Pass in the extent of the underlying raster (stored in an attribute for the montereybay</span></span>
+<span class='r-in'><span class='co'>#dataset) and the latitudes, longitudes, and altitudes of the track.</span></span>
+<span class='r-in'><span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, </span>
+<span class='r-in'>             lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_long</span><span class='op'>)</span>, </span>
+<span class='r-in'>             altitude <span class='op'>=</span> <span class='va'>z_out</span>, zscale<span class='op'>=</span><span class='fl'>50</span>,color<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='render_points-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'>    </span>
+<span class='r-in'><span class='co'>#We'll set the altitude to zero to give the tracks a "shadow" over the water. </span></span>
+<span class='r-in'><span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, </span>
+<span class='r-in'>             lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>bird_track_long</span><span class='op'>)</span>, </span>
+<span class='r-in'>             altitude <span class='op'>=</span> <span class='fl'>0</span>, zscale<span class='op'>=</span><span class='fl'>50</span>, color<span class='op'>=</span><span class='st'>"black"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='render_camera.html'>render_camera</a></span><span class='op'>(</span>theta<span class='op'>=</span><span class='fl'>30</span>,phi<span class='op'>=</span><span class='fl'>35</span>,zoom<span class='op'>=</span><span class='fl'>0.45</span>,fov<span class='op'>=</span><span class='fl'>70</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='render_points-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#Remove the points:</span></span>
+<span class='r-in'><span class='fu'>render_points</span><span class='op'>(</span>clear_previous<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Finally, we can also plot just GPS coordinates offset from the surface by leaving altitude `NULL`</span></span>
+<span class='r-in'><span class='co'># Here we plot a circle of values surrounding Moss Landing. This requires the original heightmap.</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>t</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span>,length.out<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>circle_coords_lat</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>0.3</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>circle_coords_long</span> <span class='op'>=</span> <span class='va'>moss_landing_coord</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>0.3</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>render_points</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>montereybay</span>,<span class='st'>"extent"</span><span class='op'>)</span>, heightmap <span class='op'>=</span> <span class='va'>montereybay</span>,</span>
+<span class='r-in'>           lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>circle_coords_lat</span><span class='op'>)</span>, long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>circle_coords_long</span><span class='op'>)</span>, </span>
+<span class='r-in'>           zscale<span class='op'>=</span><span class='fl'>50</span>, color<span class='op'>=</span><span class='st'>"red"</span>, offset<span class='op'>=</span><span class='fl'>100</span>, size<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='render_camera.html'>render_camera</a></span><span class='op'>(</span>theta <span class='op'>=</span> <span class='fl'>160</span>, phi<span class='op'>=</span><span class='fl'>33</span>, zoom<span class='op'>=</span><span class='fl'>0.4</span>, fov<span class='op'>=</span><span class='fl'>55</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='render_snapshot.html'>render_snapshot</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='render_points-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#And all of these work with `render_highquality()`</span></span>
+<span class='r-in'><span class='fu'><a href='render_highquality.html'>render_highquality</a></span><span class='op'>(</span>point_radius <span class='op'>=</span> <span class='fl'>3</span>, clamp_value<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='render_points-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>rgl</span><span class='fu'>::</span><span class='fu'><a href='https://dmurdoch.github.io/rgl/dev/reference/rgl.open.html'>rgl.close</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
