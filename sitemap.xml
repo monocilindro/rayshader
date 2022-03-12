@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.rayshader.com/404.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/authors.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/news/index.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/add_multi_padding.html</loc>
@@ -25,10 +40,16 @@
     <loc>https://www.rayshader.com/reference/calculate_normal.html</loc>
   </url>
   <url>
+    <loc>https://www.rayshader.com/reference/cloud_shade.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/reference/convert_color.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/create_texture.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/reference/darken_color.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/detect_water.html</loc>
@@ -49,7 +70,16 @@
     <loc>https://www.rayshader.com/reference/flipud.html</loc>
   </url>
   <url>
+    <loc>https://www.rayshader.com/reference/gen_fractal_perlin.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/reference/generate_altitude_overlay.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/reference/generate_base_shape.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/reference/generate_cloud_layer.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/generate_compass_overlay.html</loc>
@@ -82,7 +112,13 @@
     <loc>https://www.rayshader.com/reference/height_shade.html</loc>
   </url>
   <url>
+    <loc>https://www.rayshader.com/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/reference/lamb_shade.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/reference/load_image.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/make_base.html</loc>
@@ -133,16 +169,25 @@
     <loc>https://www.rayshader.com/reference/ray_shade.html</loc>
   </url>
   <url>
+    <loc>https://www.rayshader.com/reference/raymarch_cloud_layer.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/reference/reduce_matrix_size.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/render_camera.html</loc>
   </url>
   <url>
+    <loc>https://www.rayshader.com/reference/render_clouds.html</loc>
+  </url>
+  <url>
     <loc>https://www.rayshader.com/reference/render_compass.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/render_depth.html</loc>
+  </url>
+  <url>
+    <loc>https://www.rayshader.com/reference/render_floating_overlay.html</loc>
   </url>
   <url>
     <loc>https://www.rayshader.com/reference/render_highquality.html</loc>
