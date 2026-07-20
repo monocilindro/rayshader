@@ -5,32 +5,46 @@
 \title{Render High Quality}
 \usage{
 render_highquality(
-  filename = NULL,
+  filename = NA,
+  samples = 128,
+  sample_method = "sobol_blue",
+  min_variance = 1e-07,
   light = TRUE,
+  lat = NA,
+  long = NA,
+  datetime = NA,
+  sky_args = list(),
   lightdirection = 315,
   lightaltitude = 45,
   lightsize = NULL,
   lightintensity = 500,
   lightcolor = "white",
-  obj_material = rayrender::diffuse(),
-  cache_filename = NULL,
+  material = rayrender::diffuse(),
+  water_attenuation = 0,
+  water_surface_color = TRUE,
+  water_ior = 1,
+  override_material = FALSE,
+  cache_scene = FALSE,
+  reset_scene_cache = FALSE,
   width = NULL,
   height = NULL,
   text_angle = NULL,
-  text_size = 6,
-  text_offset = c(0, 0, 0),
+  text_size = 12,
+  text_offset = c(0, text_size/2, 0),
   line_radius = 0.5,
   point_radius = 0.5,
   smooth_line = FALSE,
+  use_extruded_paths = FALSE,
   scale_text_angle = NULL,
-  scale_text_size = 6,
-  scale_text_offset = c(0, 0, 0),
+  scale_text_size = 12,
+  scale_text_offset = c(0, scale_text_size/2, 0),
   title_text = NULL,
   title_offset = c(20, 20),
   title_color = "black",
   title_size = 30,
   title_font = "sans",
-  title_bar_color = NULL,
+  title_just = "left",
+  title_bar_color = NA,
   title_bar_alpha = 0.5,
   ground_material = rayrender::diffuse(),
   ground_size = 1e+05,
@@ -41,166 +55,319 @@ render_highquality(
   clear = FALSE,
   return_scene = FALSE,
   print_scene_info = FALSE,
-  clamp_value = 10,
+  clamp_value = NA,
+  calculate_consistent_normals = FALSE,
+  load_normals = TRUE,
+  point_material = rayrender::diffuse,
+  point_material_args = list(),
+  path_material = rayrender::diffuse,
+  path_material_args = list(),
+  animation_camera_coords = NULL,
+  plot = is.na(filename),
   ...
 )
 }
 \arguments{
-\item{filename}{Filename of saved image. If missing, will display to current device.}
+\item{filename}{Default \code{NA}. Filename of saved image. If missing, will display to current device.}
 
-\item{light}{Default `TRUE`. Whether there should be a light in the scene. If not, the scene will be lit with a bluish sky.}
+\item{samples}{Default \code{128}. The maximum number of samples for each pixel. Increase this to increase the quality of the rendering.}
 
-\item{lightdirection}{Default `315`. Position of the light angle around the scene. 
-If this is a vector longer than one, multiple lights will be generated (using values from 
-`lightaltitude`, `lightintensity`, and `lightcolor`)}
+\item{sample_method}{Default \code{"sobol_blue"}, unless \code{samples > 256}, in which it defaults to \code{"sobol"}.
+The type of sampling method used to generate random numbers.
+The other options are \code{random} (worst quality but fastest),
+\code{sobol_blue} (best option for sample counts below 256), and \code{sobol}
+(slowest but best quality, better than \code{sobol_blue} for sample counts greater than 256).}
 
-\item{lightaltitude}{Default `45`. Angle above the horizon that the light is located. 
-If this is a vector longer than one, multiple lights will be generated (using values from 
-`lightdirection`, `lightintensity`, and `lightcolor`)}
+\item{min_variance}{Default \code{1e-6}. Minimum acceptable variance for a block of pixels for the adaptive sampler.
+Smaller numbers give higher quality images, at the expense of longer rendering times.
+If this is set to zero, the adaptive sampler will be turned off and the renderer will use the maximum number of samples everywhere.}
 
-\item{lightsize}{Default `NULL`. Radius of the light(s). Automatically chosen, but can be set here by the user.}
+\item{light}{Default \code{TRUE}. Whether there should be a light in the scene. If not, the scene will be lit with a bluish sky.}
 
-\item{lightintensity}{Default `500`. Intensity of the light.}
+\item{lat}{Default \code{NA}. Latitude (degrees) for automatic sky generation.
+When \code{lat}, \code{long}, \code{datetime}, or \code{sky_args} are supplied, \code{render_highquality()} uses
+\code{skymodelr::generate_sky_latlong()} to create an EXR environment map, disables the default light,
+and sets \code{environment_light} for the render.}
 
-\item{lightcolor}{Default `white`. The color of the light.}
+\item{long}{Default \code{NA}. Longitude (degrees; west < 0) for automatic sky generation.}
 
-\item{obj_material}{Default `rayrender::diffuse()`. The material properties of the object file.}
+\item{datetime}{Default \code{NA}. POSIXct or character date-time used to position the sun.}
 
-\item{cache_filename}{Name of temporary filename to store OBJ file, if the user does not want to rewrite the file each time.}
+\item{sky_args}{Default empty \code{list()}. Additional arguments passed to
+\code{skymodelr::generate_sky_latlong()} (except \code{filename}, which is managed internally).
+The EXR is cached in \code{tempdir()} using a filename derived from these inputs.}
+
+\item{lightdirection}{Default \code{315}. Position of the light angle around the scene.
+If this is a vector longer than one, multiple lights will be generated (using values from
+\code{lightaltitude}, \code{lightintensity}, and \code{lightcolor})}
+
+\item{lightaltitude}{Default \code{45}. Angle above the horizon that the light is located.
+If this is a vector longer than one, multiple lights will be generated (using values from
+\code{lightdirection}, \code{lightintensity}, and \code{lightcolor})}
+
+\item{lightsize}{Default \code{NULL}. Radius of the light(s). Automatically chosen, but can be set here by the user.}
+
+\item{lightintensity}{Default \code{500}. Intensity of the light.}
+
+\item{lightcolor}{Default \code{white}. The color of the light.}
+
+\item{material}{Default \code{rayrender::diffuse()}. The material properties of the object file. Only used if \code{override_material = TRUE}}
+
+\item{water_attenuation}{Default \code{0}, no attenuation. Amount that light should be attenuated when traveling through water. This
+calculates 1-color}
+
+\item{water_surface_color}{Default \code{TRUE}. Whether the water should have a colored surface or not. This is in contrast to
+setting a non-zero water attenuation, where the color comes from the attenuation of light in the water itself.}
+
+\item{water_ior}{Default \code{1}. Water index of refraction.}
+
+\item{override_material}{Default \code{FALSE}. Whether to override the default diffuse material with that in argument \code{material}.}
+
+\item{cache_scene}{Default \code{FALSE}. Whether to cache the current scene to memory so it does not have to be converted to a \code{raymesh} object
+each time \code{\link[=render_snapshot]{render_snapshot()}} is called. If \code{TRUE} and a scene has been cached, it will be used when rendering.}
+
+\item{reset_scene_cache}{Default \code{FALSE}. Resets the scene cache before rendering.}
 
 \item{width}{Defaults to the width of the rgl window. Width of the rendering.}
 
 \item{height}{Defaults to the height of the rgl window. Height of the rendering.}
 
-\item{text_angle}{Default `NULL`, which forces the text always to face the camera. If a single angle (degrees),
+\item{text_angle}{Default \code{NULL}, which forces the text always to face the camera. If a single angle (degrees),
 will specify the absolute angle all the labels are facing. If three angles, this will specify all three orientations
 (relative to the x,y, and z axes) of the text labels.}
 
-\item{text_size}{Default `6`. Height of the text.}
+\item{text_size}{Default \code{6}. Height of the text.}
 
-\item{text_offset}{Default `c(0,0,0)`. Offset to be applied to all text labels.}
+\item{text_offset}{Default \code{c(0,0,0)}. Offset to be applied to all text labels.}
 
-\item{line_radius}{Default `0.5`. Radius of line/path segments.}
+\item{line_radius}{Default \code{0.5}. Radius of line/path segments.}
 
-\item{point_radius}{Default `0.5`. Radius of 3D points (rendered with `render_points()`.}
+\item{point_radius}{Default \code{1}. Radius of 3D points (rendered with \code{\link[=render_points]{render_points()}}). This scales the existing
+value of size specified in \code{\link[=render_points]{render_points()}}.}
 
-\item{smooth_line}{Default `FALSE`. If `TRUE`, the line will be rendered with a continuous smooth line, rather
+\item{smooth_line}{Default \code{FALSE}. If \code{TRUE}, the line will be rendered with a continuous smooth line, rather
 than straight segments.}
 
-\item{scale_text_angle}{Default `NULL`. Same as `text_angle`, but for the scale bar.}
+\item{use_extruded_paths}{Default \code{TRUE}. If \code{FALSE}, paths will be generated with the \code{rayrender::path()} object, instead
+of \code{rayrender::extruded_path()}.}
 
-\item{scale_text_size}{Default `6`. Height of the scale bar text.}
+\item{scale_text_angle}{Default \code{NULL}. Same as \code{text_angle}, but for the scale bar.}
 
-\item{scale_text_offset}{Default `c(0,0,0)`. Offset to be applied to all scale bar text labels.}
+\item{scale_text_size}{Default \code{6}. Height of the scale bar text.}
 
-\item{title_text}{Default `NULL`. Text. Adds a title to the image, using magick::image_annotate.}
+\item{scale_text_offset}{Default \code{c(0,0,0)}. Offset to be applied to all scale bar text labels.}
 
-\item{title_offset}{Default `c(20,20)`. Distance from the top-left (default, `gravity` direction in 
+\item{title_text}{Default \code{NULL}. Text. Adds a title to the image, using magick::image_annotate.}
+
+\item{title_offset}{Default \code{c(20,20)}. Distance from the top-left (default, \code{gravity} direction in
 image_annotate) corner to offset the title.}
 
-\item{title_color}{Default `black`. Font color.}
+\item{title_color}{Default \code{black}. Font color.}
 
-\item{title_size}{Default `30`. Font size in pixels.}
+\item{title_size}{Default \code{30}. Font size in pixels.}
 
-\item{title_font}{Default `sans`. String with font family such as "sans", "mono", "serif", "Times", "Helvetica", 
+\item{title_font}{Default \code{sans}. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
 "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
 
-\item{title_bar_color}{Default `NULL`. If a color, this will create a colored bar under the title.}
+\item{title_just}{Default \code{left}. Justification of the title.}
 
-\item{title_bar_alpha}{Default `0.5`. Transparency of the title bar.}
+\item{title_bar_color}{Default \code{NA}. If a color, this will create a colored bar under the title.}
 
-\item{ground_material}{Default `diffuse()`. Material defined by the rayrender material functions.}
+\item{title_bar_alpha}{Default \code{0.5}. Transparency of the title bar.}
 
-\item{ground_size}{Default `100000`. The width of the plane representing the ground.}
+\item{ground_material}{Default \code{diffuse()}. Material defined by the rayrender material functions.}
 
-\item{scene_elements}{Default `NULL`. Extra scene elements to add to the scene, created with rayrender.}
+\item{ground_size}{Default \code{100000}. The width of the plane representing the ground.}
 
-\item{camera_location}{Default `NULL`. Custom position of the camera. The `FOV`, `width`, and `height` arguments will still
+\item{scene_elements}{Default \code{NULL}. Extra scene elements to add to the scene, created with rayrender.}
+
+\item{camera_location}{Default \code{NULL}. Custom position of the camera. The \code{FOV}, \code{width}, and \code{height} arguments will still
 be derived from the rgl window.}
 
-\item{camera_lookat}{Default `NULL`. Custom point at which the camera is directed. The `FOV`, `width`, and `height` arguments will still
+\item{camera_lookat}{Default \code{NULL}. Custom point at which the camera is directed. The \code{FOV}, \code{width}, and \code{height} arguments will still
 be derived from the rgl window.}
 
-\item{camera_interpolate}{Default `c(0,0)`. Maximum `1`, minimum `0`. Sets the camera at a point between the `rgl` view and the `camera_location` 
-and `camera_lookat` vectors.}
+\item{camera_interpolate}{Default \code{c(0,0)}. Maximum \code{1}, minimum \code{0}. Sets the camera at a point between the \code{rgl} view and the \code{camera_location}
+and \code{camera_lookat} vectors.}
 
-\item{clear}{Default `FALSE`. If `TRUE`, the current `rgl` device will be cleared.}
+\item{clear}{Default \code{FALSE}. If \code{TRUE}, the current \code{rgl} device will be cleared.}
 
-\item{return_scene}{Default `FALSE`. If `TRUE`, this will return the rayrender scene (instead of rendering the image).}
+\item{return_scene}{Default \code{FALSE}. If \code{TRUE}, this will return the rayrender scene (instead of rendering the image).}
 
-\item{print_scene_info}{Default `FALSE`. If `TRUE`, it will print the position and lookat point of the camera.}
+\item{print_scene_info}{Default \code{FALSE}. If \code{TRUE}, it will print the position and lookat point of the camera.}
 
-\item{clamp_value}{Default `10`. See documentation for `rayrender::render_scene()`.}
+\item{clamp_value}{Default \code{NA}. If \code{NA}, uses \code{100} when the OIDN denoiser is unavailable
+and \code{10000} when it is available (via \code{rayrender::has_denoiser()}).}
 
-\item{...}{Additional parameters to pass to `rayrender::render_scene`()}
+\item{calculate_consistent_normals}{Default \code{FALSE}. Whether to calculate consistent vertex normals to prevent energy
+loss at edges.}
+
+\item{load_normals}{Default \code{TRUE}. Whether to load the vertex normals if they exist in the OBJ file.}
+
+\item{point_material}{Default \code{rayrender::diffuse}. The rayrender material function to be applied
+to point data.}
+
+\item{point_material_args}{Default empty \code{list()}. The function arguments to \code{point_material}.
+The argument \code{color} will be automatically extracted from the rgl scene, but all other arguments
+can be specified here.}
+
+\item{path_material}{Default \code{rayrender::diffuse}. The rayrender material function to be applied
+to path data.}
+
+\item{path_material_args}{Default empty \code{list()}. The function arguments to \code{path_material}.
+The argument \code{color} will be automatically extracted from the rgl scene, but all other arguments
+can be specified here.}
+
+\item{animation_camera_coords}{Default \code{NULL}. Expects camera animation output from either \code{\link[=convert_path_to_animation_coords]{convert_path_to_animation_coords()}}
+or \code{rayrender::generate_camera_motion()} functions.}
+
+\item{plot}{Default \code{is.na(filename)}. Whether to plot the scene, or just return the RGBA array.}
+
+\item{...}{Additional parameters to pass to \code{rayrender::render_scene}()}
 }
 \description{
-Renders a raytraced version of the displayed rgl scene, using the `rayrender` package. 
-User can specify the light direction, intensity, and color, as well as specify the material of the 
+Renders a raytraced version of the displayed rgl scene, using the \code{rayrender} package.
+User can specify the light direction, intensity, and color, as well as specify the material of the
 ground and add additional scene elements.
+
+This function can also generate frames for an animation by passing camera animation information from
+either \code{\link[=convert_path_to_animation_coords]{convert_path_to_animation_coords()}} or \code{rayrender::generate_camera_motion()} functions.
 }
 \examples{
 #Render the volcano dataset using pathtracing
-\donttest{
+if(run_documentation()) {
 volcano \%>\%
  sphere_shade() \%>\%
  plot_3d(volcano,zscale = 2)
-render_highquality() 
+render_highquality(min_variance = 0, sample_method = "sobol_blue")
 }
 
 #Change position of light
-\donttest{
-render_highquality(lightdirection = 45)
+if(run_documentation()) {
+render_highquality(lightdirection = 45, min_variance = 0, sample_method = "sobol_blue")
 }
 
 #Change vertical position of light
-\donttest{
-render_highquality(lightdirection = 45, lightaltitude=10)
+if(run_documentation()) {
+render_highquality(lightdirection = 45, lightaltitude = 10,
+                  min_variance = 0, samples = 16)
 }
 
 #Change the ground material
-\donttest{
+if(run_documentation()) {
 render_highquality(lightdirection = 45, lightaltitude=60,
-                  ground_material = rayrender::diffuse(checkerperiod = 30, checkercolor="grey50"))
+                  ground_material = rayrender::diffuse(checkerperiod = 30, checkercolor="grey50"),
+                  min_variance = 0, samples = 16)
 }
 
 #Add three different color lights and a title
-\donttest{
+if(run_documentation()) {
 render_highquality(lightdirection = c(0,120,240), lightaltitude=45,
                   lightcolor=c("red","green","blue"), title_text = "Red, Green, Blue",
-                  title_bar_color="white", title_bar_alpha=0.8)
+                  title_bar_color="white", title_bar_alpha=0.8,
+                  min_variance = 0, samples = 16)
 }
 
 #Change the camera:
-\donttest{
+if(run_documentation()) {
 render_camera(theta=-45,phi=60,fov=60,zoom=0.8)
 render_highquality(lightdirection = c(0),
-                  title_bar_color="white", title_bar_alpha=0.8)
+                  title_bar_color="white", title_bar_alpha=0.8,
+                  min_variance = 0, samples = 16)
 }
 #Add a shiny metal sphere
-\donttest{
+if(run_documentation()) {
 render_camera(theta=-45,phi=60,fov=60,zoom=0.8)
-render_highquality(lightdirection = c(0,120,240), lightaltitude=45, 
+render_highquality(lightdirection = c(0,120,240), lightaltitude=45,
                   lightcolor=c("red","green","blue"),
                   scene_elements = rayrender::sphere(z=-60,y=0,
-                                                     radius=20,material=rayrender::metal()))
+                                                     radius=20,material=rayrender::metal()),
+                  min_variance = 0)
 }
 
 #Add a red light to the volcano and change the ambient light to dusk
-\donttest{
+if(run_documentation()) {
 render_camera(theta=45,phi=45)
-render_highquality(lightdirection = c(240), lightaltitude=30, 
+render_highquality(lightdirection = c(240), lightaltitude=30,
                   lightcolor=c("#5555ff"),
                   scene_elements = rayrender::sphere(z=0,y=15, x=-18, radius=5,
-                                   material=rayrender::light(color="red",intensity=10)))
+                                   material=rayrender::light(color="red",intensity=10)),
+                  min_variance = 0, samples = 16)
 }
 #Manually change the camera location and direction
-\donttest{
+if(run_documentation()) {
 render_camera(theta=45,phi=45,fov=90)
-render_highquality(lightdirection = c(240), lightaltitude=30, lightcolor=c("#5555ff"), 
+render_highquality(lightdirection = c(240), lightaltitude=30, lightcolor=c("#5555ff"),
                   camera_location = c(50,10,10), camera_lookat = c(0,15,0),
                   scene_elements = rayrender::sphere(z=0,y=15, x=-18, radius=5,
-                                   material=rayrender::light(color="red",intensity=10)))
-rgl::rgl.close()
+                                   material=rayrender::light(color="red",intensity=10)),
+                  min_variance = 0, samples = 16)
+}
+# Render the shadow of the Washington Monument with a realistic sky at that datetime
+# using the `skymodelr` package.
+run_examples = length(find.package("sf", quiet = TRUE)) &&
+              length(find.package("elevatr", quiet = TRUE)) &&
+              length(find.package("raster", quiet = TRUE)) &&
+              run_documentation()
+if(run_examples) {
+library(sf)
+#Set location of washington monument
+washington_monument_location =  st_point(c(-77.035249, 38.889462))
+wm_point = washington_monument_location |>
+ st_point() |>
+ st_buffer(0.01) |>
+ st_sfc(crs = 4326) |>
+ st_transform(st_crs(washington_monument_multipolygonz))
+
+elevation_data = elevatr::get_elev_raster(locations = wm_point, z = 14)
+
+scene_bbox = st_bbox(st_buffer(wm_point,300))
+cropped_data = raster::crop(elevation_data, scene_bbox)
+
+#Use rayshader to convert that raster data to a matrix
+dc_elevation_matrix = raster_to_matrix(cropped_data)
+
+#Remove negative elevation data
+dc_elevation_matrix[dc_elevation_matrix < 0] = 0
+
+#Plot a 3D map of the national mall
+dc_elevation_matrix |>
+ height_shade() |>
+ add_shadow(lamb_shade(dc_elevation_matrix), 0) |>
+ plot_3d(dc_elevation_matrix, zscale=3.7, water = TRUE, waterdepth = 1,
+         soliddepth=-50, windowsize = 800)
+#Zoom in on the monument
+render_camera(theta=45,  phi=0, zoom= 0.03, fov=130)
+#Render the national monument at solar noon on the solstice
+rgl::par3d(ignoreExtent = TRUE)
+render_multipolygonz(washington_monument_multipolygonz,
+                    extent = raster::extent(cropped_data),
+                    zscale = 4, color = "grey80",
+                    heightmap = dc_elevation_matrix)
+#Render using the built-in (but less accurate) Hosek model.
+# Here's it's more yellow than it should be, but it's accurate enough for most renders.
+render_highquality(
+min_variance = 0,
+samples = 16,
+long = -77.035249,
+lat = 38.889462,
+iso = 8,
+clamp_value = 10000,
+datetime = as.POSIXct("2025-12-21 16:00:00", tz = "EST")
+)
+
+# Render the more-accurate Praguq model (that requires
+# supplemental data that will be downloaded on the first call) and
+# specify a higher resolution environment map via `sky_args`
+render_highquality(
+min_variance = 0,
+samples = 16,
+long = -77.035249,
+lat = 38.889462,
+sky_args = list(hosek = FALSE,resolution=4000),
+iso = 8,
+clamp_value = 10000,
+datetime = as.POSIXct("2025-12-21 16:00:00", tz = "EST")
+)
 }
 }

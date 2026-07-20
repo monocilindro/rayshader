@@ -28,48 +28,48 @@ render_clouds(
 )
 }
 \arguments{
-\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. This is used by `render_clouds()` to 
+\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. This is used by \code{\link[=render_clouds]{render_clouds()}} to
 calculate the regions the clouds should be rendered in.}
 
-\item{start_altitude}{Default `1000`. The bottom of the cloud layer.}
+\item{start_altitude}{Default \code{1000}. The bottom of the cloud layer.}
 
-\item{end_altitude}{Default `2000`. The top of the cloud layer.}
+\item{end_altitude}{Default \code{2000}. The top of the cloud layer.}
 
-\item{sun_altitude}{Default `90`. The angle, in degrees (as measured from the horizon) from which the light originates.}
+\item{sun_altitude}{Default \code{90}. The angle, in degrees (as measured from the horizon) from which the light originates.}
 
-\item{sun_angle}{Default `315` (NW). The angle, in degrees, around the matrix from which the light originates. Zero degrees is North, increasing clockwise}
+\item{sun_angle}{Default \code{315} (NW). The angle, in degrees, around the matrix from which the light originates. Zero degrees is North, increasing clockwise}
 
-\item{time}{Default `0`. Advance this to make the clouds evolve and change in shape.}
+\item{time}{Default \code{0}. Advance this to make the clouds evolve and change in shape.}
 
-\item{cloud_cover}{Default `0.5`. The percentage of cloud cover.}
+\item{cloud_cover}{Default \code{0.5}. The percentage of cloud cover.}
 
-\item{layers}{Default `10`. The number of layers to render the cloud layer. 
-The default is `layers/(start_altitude - end_altitude)`.}
+\item{layers}{Default \code{10}. The number of layers to render the cloud layer.
+The default is \code{layers/(start_altitude - end_altitude)}.}
 
-\item{offset_x}{Default `0`. Change this to move the cloud layer sideways.}
+\item{offset_x}{Default \code{0}. Change this to move the cloud layer sideways.}
 
-\item{offset_y}{Default `0`. Change this to move the cloud layer backwards and forwards.}
+\item{offset_y}{Default \code{0}. Change this to move the cloud layer backwards and forwards.}
 
-\item{scale_x}{Default `1`. Scale the fractal pattern in the x direction.}
+\item{scale_x}{Default \code{1}. Scale the fractal pattern in the x direction.}
 
-\item{scale_y}{Default `1`. Scale the fractal pattern in the y direction.}
+\item{scale_y}{Default \code{1}. Scale the fractal pattern in the y direction.}
 
-\item{scale_z}{Default `1`. Scale the fractal pattern in the z (vertical) direction. (automatically calculated). Scale the fractal pattern in the z (vertical) direction.}
+\item{scale_z}{Default \code{1}. Scale the fractal pattern in the z (vertical) direction. (automatically calculated). Scale the fractal pattern in the z (vertical) direction.}
 
-\item{frequency}{Default `0.005`. The base frequency of the noise used to calculate the fractal cloud structure.}
+\item{frequency}{Default \code{0.005}. The base frequency of the noise used to calculate the fractal cloud structure.}
 
-\item{fractal_levels}{Default `16`. The fractal dimension used to calculate the noise. Higher values give more fine structure, but take longer to calculate.}
+\item{fractal_levels}{Default \code{16}. The fractal dimension used to calculate the noise. Higher values give more fine structure, but take longer to calculate.}
 
-\item{attenuation_coef}{Default `1`. Amount of attenuation in the cloud (higher numbers give darker shadows).  This value is automatically scaled to account for increasing the number of layers.}
+\item{attenuation_coef}{Default \code{1}. Amount of attenuation in the cloud (higher numbers give darker shadows).  This value is automatically scaled to account for increasing the number of layers.}
 
-\item{seed}{Default `1`. Random seed used to generate clouds.}
+\item{seed}{Default \code{1}. Random seed used to generate clouds.}
 
-\item{zscale}{Default `1`. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
-of 1 meter and the grid values are separated by 10 meters, `zscale` would be 10.}
+\item{zscale}{Default \code{1}. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
+of 1 meter and the grid values are separated by 10 meters, \code{zscale} would be 10.}
 
-\item{baseshape}{Default `rectangle`. Shape of the base. Options are `c("rectangle","circle","hex")`.}
+\item{baseshape}{Default \code{rectangle}. Shape of the base. Options are \code{c("rectangle","circle","hex")}.}
 
-\item{clear_clouds}{Default `FALSE`. Clears all existing floating layers on the visualization.}
+\item{clear_clouds}{Default \code{FALSE}. Clears all existing floating layers on the visualization.}
 }
 \value{
 Adds a 3D floating cloud layer to the map. No return value.
@@ -80,77 +80,85 @@ Render a 3D floating cloud layer of the map.
 Note: Underlying layers with transparency can cause rendering issues in rgl.
 }
 \examples{
-\dontrun{
+if(run_documentation()) {
 #Render a cloud layer over Monterey Bay
-montereybay  \%>\%
- sphere_shade()  \%>\%
+montereybay  |>
+ sphere_shade()  |>
  plot_3d(montereybay,background="brown",zscale=50)
 
 #Render some clouds
-render_clouds(montereybay, zscale=50)  
+render_clouds(montereybay, zscale=50)
 render_snapshot()
-rgl::rgl.clear()
-
-
+}
+if(run_documentation()) {
 #Change the seed for a different set of clouds and add cloud shadows on the ground
-montereybay  \%>\%
- sphere_shade()  \%>\%
- add_shadow(cloud_shade(montereybay,zscale=50, seed = 2), 0.0) \%>\%
+montereybay  |>
+ sphere_shade()  |>
+ add_shadow(cloud_shade(montereybay,zscale=50, seed = 2), 0.0) |>
  plot_3d(montereybay,background="brown",zscale=50)
 render_camera(theta=-65, phi = 25, zoom = 0.45, fov = 80)
-render_clouds(montereybay, zscale=50, seed=2, clear_clouds = T)    
+render_clouds(montereybay, zscale=50, seed=2, clear_clouds = T)
 render_snapshot()
-rgl::rgl.clear()
+}
 
-montereybay  \%>\%
- sphere_shade()  \%>\%
+if(run_documentation()) {
+montereybay  |>
+ sphere_shade()  |>
  plot_3d(montereybay,background="brown",zscale=50)
- 
+
 #Lower the frequency for larger, smoother clouds
 render_clouds(montereybay, zscale=50, frequency = 0.001, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Increase the frequency for more broken clouds
 render_clouds(montereybay, zscale=50, frequency = 0.05, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Increase the fractal level for fluffier, bumpier clouds
 render_clouds(montereybay, zscale=50, fractal_levels = 32, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Decrease the fractal level for more smoother, continuous clouds
 render_clouds(montereybay, zscale=50, fractal_levels = 4, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Increase the cloud cover
-render_clouds(montereybay, zscale=50, cloud_cover=0.8, clear_clouds = T)            
+render_clouds(montereybay, zscale=50, cloud_cover=0.8, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Decrease the cloud cover
-render_clouds(montereybay, zscale=50, cloud_cover=0.2, clear_clouds = T)            
+render_clouds(montereybay, zscale=50, cloud_cover=0.2, clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Change the altitude range of the clouds
-render_clouds(montereybay,zscale=50,start_altitude=2000,end_altitude = 4000, clear_clouds = T)            
+render_clouds(montereybay,zscale=50,start_altitude=2000,end_altitude = 4000, clear_clouds = T)
 render_snapshot()
-
-#Increase the number of layers 
+}
+if(run_documentation()) {
+#Increase the number of layers
 render_clouds(montereybay, zscale=50,start_altitude=2000,end_altitude = 4000, layers = 20,
              clear_clouds = T)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Change the sun angle and altitude, and increase the attenuation for darker clouds
 render_clouds(montereybay,zscale=50,sun_angle=45, sun_altitude= 5, attenuation_coef = 5,
              clear_clouds = T)
-render_snapshot(clear=TRUE)
-
+render_snapshot()
+}
+if(run_documentation()) {
 #Render the scene with a different baseshape
-montereybay  \%>\%
- sphere_shade()  \%>\%
+montereybay  |>
+ sphere_shade()  |>
  plot_3d(montereybay,background="darkred",zscale=50, baseshape="hex")
-render_clouds(montereybay,zscale=50, seed=3, baseshape="hex", clear_clouds = T)  
+render_clouds(montereybay,zscale=50, seed=3, baseshape="hex", clear_clouds = T)
 render_camera(zoom=0.65)
 render_snapshot()
-rgl::rgl.close()
 }
 }

@@ -18,23 +18,23 @@ texture_shade(
 \arguments{
 \item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point.}
 
-\item{detail}{Default `0.5`. Amount of detail in texture shading algorithm. `0` is the least detail, 
-while `1` is the most.}
+\item{detail}{Default \code{0.5}. Amount of detail in texture shading algorithm. \code{0} is the least detail,
+while \code{1} is the most.}
 
-\item{contrast}{Default `1`,standard brightness. Amount of contrast in the texture shading. 
-This transforms the resulting darkness using the formula `tanh(input * contrast + brightness)`.}
+\item{contrast}{Default \code{1},standard brightness. Amount of contrast in the texture shading.
+This transforms the resulting darkness using the formula \code{tanh(input * contrast + brightness)}.}
 
-\item{brightness}{Default `0`, standard brightness. Higher values will brighten the texture hillshade, 
+\item{brightness}{Default \code{0}, standard brightness. Higher values will brighten the texture hillshade,
 while lower values will darken it.}
 
-\item{transform}{Default `TRUE`. Whether to apply the `tanh(input * contrast + brightness)` transformation.
-This transforms the resulting darkness using the formula `tanh(input * contrast + brightness)`.}
+\item{transform}{Default \code{TRUE}. Whether to apply the \code{tanh(input * contrast + brightness)} transformation.
+This transforms the resulting darkness using the formula \code{tanh(input * contrast + brightness)}.}
 
-\item{dx}{Default `1`. The distance between each row of data (compared to the height axis).}
+\item{dx}{Default \code{1}. The distance between each row of data (compared to the height axis).}
 
-\item{dy}{Default `1`. The distance between each column of data (compared to the height axis).}
+\item{dy}{Default \code{1}. The distance between each column of data (compared to the height axis).}
 
-\item{pad}{Default `50`. The amount to pad the heightmap so edge effects don't appear from the
+\item{pad}{Default \code{50}. The amount to pad the heightmap so edge effects don't appear from the
 fourier transform. Only increase this if you encounter boundary effects.}
 }
 \value{
@@ -46,42 +46,47 @@ Leland Brown in "Texture Shading: A New Technique for Depicting Terrain Relief."
 }
 \examples{
 #Create a direct mapping of elevation to color:
-\donttest{
+if(run_documentation()) {
 
 #Plut using default values
-montereybay \%>\% 
-  texture_shade() \%>\% 
+montereybay |>
+  texture_shade() |>
   plot_map()
-  
+}
+if(run_documentation()) {
 #Increase the level of detail
-montereybay \%>\% 
-  texture_shade(detail=1) \%>\% 
+montereybay |>
+  texture_shade(detail=1) |>
   plot_map()
-  
+}
+if(run_documentation()) {
 #Decrease the level of detail
-montereybay \%>\% 
-  texture_shade(detail=0) \%>\% 
+montereybay |>
+  texture_shade(detail=0) |>
   plot_map()
-  
+}
+if(run_documentation()) {
 #Increase the level of contrast
-montereybay \%>\% 
-  texture_shade(contrast=3) \%>\% 
+montereybay |>
+  texture_shade(contrast=3) |>
   plot_map()
-  
+}
+if(run_documentation()) {
 #Increase the brightness for this level of contrast
-montereybay \%>\% 
-  texture_shade(contrast=5, brightness = 2) \%>\% 
+montereybay |>
+  texture_shade(contrast=5, brightness = 2) |>
   plot_map()
-  
+}
 #Add a texture_shade() layer into a map
 montbay = montereybay
 montbay[montbay < 0] = 0
-
-montbay \%>\%
-  height_shade() \%>\%
-  add_water(detect_water(montbay), color="dodgerblue") \%>\%
-  add_shadow(texture_shade(montbay, detail=1/3, contrast = 5, brightness = 6),0) \%>\%
-  add_shadow(lamb_shade(montbay,zscale=50),0) \%>\% 
+if(run_documentation()) {
+montbay |>
+  height_shade() |>
+  add_water(detect_water(montbay), color="dodgerblue") |>
+  add_shadow(texture_shade(montbay, detail=1/6, contrast = 4,
+                           brightness = 3),0.1) |>
+  add_shadow(lamb_shade(montbay,zscale=50),0) |>
   plot_map()
 }
 }

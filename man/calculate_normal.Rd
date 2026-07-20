@@ -11,7 +11,7 @@ calculate_normal(heightmap, zscale = 1, progbar = FALSE)
 
 \item{zscale}{Default 1.}
 
-\item{progbar}{Default `FALSE`. If `TRUE`, turns on progress bar.}
+\item{progbar}{Default \code{FALSE}. If \code{TRUE}, turns on progress bar.}
 }
 \value{
 Matrix of light intensities at each point.
@@ -23,13 +23,13 @@ Calculates the normal unit vector for every point on the grid.
 #Here we produce a light intensity map of the `volcano` elevation map.
 
 #Cache the normal vectors of the volcano dataset
-\donttest{
+if(run_documentation()) {
 volcanocache = calculate_normal(volcano)
 }
 
 #Use the cached vectors to speed up calculation of `sphere_shade()` on a map.
-\donttest{
-sphere_shade(volcano,normalvectors = volcanocache) \%>\%
+if(run_documentation()) {
+sphere_shade(volcano,normalvectors = volcanocache) |>
  plot_map()
 }
 }

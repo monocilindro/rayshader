@@ -4,14 +4,21 @@
 \alias{make_shadow}
 \title{make_shadow}
 \usage{
-make_shadow(heightmap, basedepth, shadowwidth, color, shadowcolor)
+make_shadow(
+  heightmap,
+  basedepth,
+  shadowwidth,
+  color,
+  shadowcolor,
+  offset = c(0, 0)
+)
 }
 \arguments{
 \item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.}
 
-\item{basedepth}{Default `grey20`.}
+\item{basedepth}{Default \code{grey20}.}
 
-\item{shadowwidth}{Default `50`. Shadow width.}
+\item{shadowwidth}{Default \code{50}. Shadow width.}
 }
 \description{
 Makes the base below the 3D elevation map.

@@ -17,12 +17,12 @@ generate_altitude_overlay(
 
 \item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All grid points are assumed to be evenly spaced.}
 
-\item{start_transition}{Elevation above which `hillshade` is completely transparent.}
+\item{start_transition}{Elevation above which \code{hillshade} is completely transparent.}
 
-\item{end_transition}{Default `NULL`. Elevation below which `hillshade` is completely opaque. By default, this is equal to `start_transition`.}
+\item{end_transition}{Default \code{NULL}. Elevation below which \code{hillshade} is completely opaque. By default, this is equal to \code{start_transition}.}
 
-\item{lower}{Default `TRUE`. This makes `hillshade` completely opaque below `start_transition`. If
-`FALSE`, the direction will be reversed.}
+\item{lower}{Default \code{TRUE}. This makes \code{hillshade} completely opaque below \code{start_transition}. If
+\code{FALSE}, the direction will be reversed.}
 }
 \value{
 4-layer RGB array representing the semi-transparent hillshade.
@@ -33,31 +33,32 @@ layer onto an existing map.
 }
 \examples{
 #Create a bathymetric hillshade
-#Only run these examples if the `magick` package is installed.
-if (length(find.package("magick", quiet = TRUE)) > 0) {
-\donttest{
+if(run_documentation()) {
 water_palette = colorRampPalette(c("darkblue", "dodgerblue", "lightblue"))(200)
 bathy_hs = height_shade(montereybay, texture = water_palette)
 plot_map(bathy_hs)
+}
 
+if(run_documentation()) {
 #Set everything below 0m to water palette
-montereybay \%>\%
- sphere_shade(zscale=10) \%>\%
- add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
+montereybay |>
+ sphere_shade(zscale=10) |>
+ add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  |>
+ add_shadow(ray_shade(montereybay,zscale=50),0.3) |>
  plot_map()
+}
 
-#Add snow peaks by setting `lower = FALSE`  
+#Add snow peaks by setting `lower = FALSE`
 snow_palette = "white"
 snow_hs = height_shade(montereybay, texture = snow_palette)
 
+if(run_documentation()) {
 #Set the snow transition region from 500m to 1200m
-montereybay \%>\%
- sphere_shade(zscale=10, texture = "desert") \%>\%
- add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  \%>\%
- add_overlay(generate_altitude_overlay(snow_hs, montereybay, 500, 1200, lower=FALSE))  \%>\%
- add_shadow(ambient_shade(montereybay,zscale=50,maxsearch=100),0) \%>\%
+montereybay |>
+ sphere_shade(zscale=10, texture = "desert") |>
+ add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  |>
+ add_overlay(generate_altitude_overlay(snow_hs, montereybay, 500, 1200, lower=FALSE))  |>
+ add_shadow(ambient_shade(montereybay,zscale=50,maxsearch=100),0) |>
  plot_map()
-}
 }
 }

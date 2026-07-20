@@ -16,22 +16,24 @@ detect_water(
 )
 }
 \arguments{
-\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All grid points are assumed to be evenly spaced.}
+\item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point.
+All grid points are assumed to be evenly spaced. Alternatively, if heightmap is a logical matrix, each entry
+specifies whether that point is water or not.}
 
-\item{zscale}{Default `1`. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
-of 1 meter and the grid values are separated by 10 meters, `zscale` would be 10.}
+\item{zscale}{Default \code{1}. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
+of 1 meter and the grid values are separated by 10 meters, \code{zscale} would be 10.}
 
-\item{cutoff}{Default `0.999`. The lower limit of the z-component of the unit normal vector to be classified as water.}
+\item{cutoff}{Default \code{0.999}. The lower limit of the z-component of the unit normal vector to be classified as water.}
 
 \item{min_area}{Default length(heightmap)/400. Minimum area (in units of the height matrix x and y spacing) to be considered a body of water.}
 
-\item{max_height}{Default `NULL`. If passed, this number will specify the maximum height a point can be considered to be water.}
+\item{max_height}{Default \code{NULL}. If passed, this number will specify the maximum height a point can be considered to be water.}
 
-\item{normalvectors}{Default `NULL`. Pre-computed array of normal vectors from the `calculate_normal` function. Supplying this will speed up water detection.}
+\item{normalvectors}{Default \code{NULL}. Pre-computed array of normal vectors from the \code{\link[=calculate_normal]{calculate_normal()}} function. Supplying this will speed up water detection.}
 
-\item{keep_groups}{Default `FALSE`. If `TRUE`, the matrix returned will retain the numbered grouping information.}
+\item{keep_groups}{Default \code{FALSE}. If \code{TRUE}, the matrix returned will retain the numbered grouping information.}
 
-\item{progbar}{Default `FALSE`. If `TRUE`, turns on progress bar.}
+\item{progbar}{Default \code{FALSE}. If \code{TRUE}, turns on progress bar.}
 }
 \value{
 Matrix indicating whether water was detected at that point. 1 indicates water, 0 indicates no water.
@@ -40,14 +42,13 @@ Matrix indicating whether water was detected at that point. 1 indicates water, 0
 Detects bodies of water (of a user-defined minimum size) within an elevation matrix.
 }
 \examples{
-library(magrittr)
 #Here we even out a portion of the volcano dataset to simulate water:
 island_volcano = volcano
 island_volcano[island_volcano < mean(island_volcano)] = mean(island_volcano)
 
 #Setting a minimum area avoids classifying small flat areas as water:
-island_volcano \%>\%
- sphere_shade(texture="imhof3") \%>\%
- add_water(detect_water(island_volcano, min_area = 400),color="imhof3") \%>\%
+island_volcano |>
+ sphere_shade(texture="imhof3") |>
+ add_water(detect_water(island_volcano, min_area = 400),color="imhof3") |>
  plot_map()
 }

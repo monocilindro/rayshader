@@ -5,48 +5,54 @@
 \title{Render Points}
 \usage{
 render_points(
-  extent = NULL,
   lat = NULL,
   long = NULL,
   altitude = NULL,
+  extent = NULL,
   zscale = 1,
   heightmap = NULL,
-  size = 3,
+  size = 0.5,
   color = "black",
   offset = 5,
   clear_previous = FALSE
 )
 }
 \arguments{
-\item{extent}{A `raster::Extent` object with the bounding box of the displayed 3D scene.}
-
 \item{lat}{Vector of latitudes (or other coordinate in the same coordinate reference system as extent).}
 
 \item{long}{Vector of longitudes (or other coordinate in the same coordinate reference system as extent).}
 
-\item{altitude}{Elevation of each point, in units of the elevation matrix (scaled by zscale).}
+\item{altitude}{Default \code{NULL}. Elevation of each point, in units of the elevation matrix (scaled by zscale). If a single value,
+all data will be rendered at that altitude.}
 
-\item{zscale}{Default `1`. The ratio between the x and y spacing (which are assumed to be equal) and the z axis in the original heightmap.}
+\item{extent}{Either an object representing the spatial extent of the 3D scene
+(either from the \code{raster}, \code{terra}, \code{sf}, or \code{sp} packages),
+a length-4 numeric vector specifying \code{c("xmin", "xmax","ymin","ymax")}, or the spatial object (from
+the previously aforementioned packages) which will be automatically converted to an extent object.}
 
-\item{heightmap}{Default `NULL`. Automatically extracted from the rgl window--only use if auto-extraction
+\item{zscale}{Default \code{1}. The ratio between the x and y spacing (which are assumed to be equal) and the z axis in the original heightmap.}
+
+\item{heightmap}{Default \code{NULL}. Automatically extracted from the rgl window--only use if auto-extraction
 of matrix extent isn't working. A two-dimensional matrix, where each entry in the matrix is the elevation at that point.
 All points are assumed to be evenly spaced.}
 
-\item{size}{Default `3`. The point size.}
+\item{size}{Default \code{3}. The point size. This can be a vector (the same length as \code{lat} and \code{long}) specifying
+a size for each point.}
 
-\item{color}{Default `black`. Color of the point.}
+\item{color}{Default \code{black}. Color of the point. This can also be a vector specifying the color of each point.}
 
-\item{offset}{Default `5`. Offset of the track from the surface, if `altitude = NULL`.}
+\item{offset}{Default \code{5}. Offset of the track from the surface, if \code{altitude = NULL}.}
 
-\item{clear_previous}{Default `FALSE`. If `TRUE`, it will clear all existing points.}
+\item{clear_previous}{Default \code{FALSE}. If \code{TRUE}, it will clear all existing points.}
 }
 \description{
 Adds 3D datapoints to the current scene, using latitude/longitude or coordinates in the reference
-system defined by the extent object. If no altitude is provided, the points will be elevated a constant offset 
-above the heightmap. If the points goes off the edge, the nearest height on the heightmap will be used.
+system defined by the extent object. If no altitude is provided, the points will be elevated a constant offset
+above the heightmap. If the points goes off the edge, the nearest height on the heightmap will be used (unless that
+value is NA, in which the point will be removed).
 }
 \examples{
-\donttest{
+if(run_documentation()) {
 #Starting at Moss Landing in Monterey Bay, we are going to simulate a flight of a bird going
 #out to sea and diving for food.
 
@@ -69,26 +75,28 @@ bird_track_long[[i]] = bird_track_long[[i-1]] + x_vel_out[i]
 
 
 #Render the 3D map
-montereybay \%>\%
- sphere_shade() \%>\%
+montereybay |>
+ sphere_shade() |>
  plot_3d(montereybay,zscale=50,water=TRUE,
          shadowcolor="#40310a", background = "tan",
          theta=210,  phi=22, zoom=0.20, fov=55)
 
 #Pass in the extent of the underlying raster (stored in an attribute for the montereybay
 #dataset) and the latitudes, longitudes, and altitudes of the track.
-render_points(extent = attr(montereybay,"extent"), 
-             lat = unlist(bird_track_lat), long = unlist(bird_track_long), 
+render_points(extent = attr(montereybay,"extent"),
+             lat = unlist(bird_track_lat), long = unlist(bird_track_long),
              altitude = z_out, zscale=50,color="white")
 render_snapshot()
-    
-#We'll set the altitude to zero to give the tracks a "shadow" over the water. 
-render_points(extent = attr(montereybay,"extent"), 
-             lat = unlist(bird_track_lat), long = unlist(bird_track_long), 
-             altitude = 0, zscale=50, color="black")
+}
+if(run_documentation()) {
+#We'll set the altitude to zero to give the tracks a "shadow" over the water.
+render_points(extent = attr(montereybay,"extent"),
+             lat = unlist(bird_track_lat), long = unlist(bird_track_long),
+             offset = 0, zscale=50, color="black")
 render_camera(theta=30,phi=35,zoom=0.45,fov=70)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #Remove the points:
 render_points(clear_previous=TRUE)
 
@@ -99,13 +107,21 @@ t = seq(0,2*pi,length.out=100)
 circle_coords_lat = moss_landing_coord[1] + 0.3 * sin(t)
 circle_coords_long = moss_landing_coord[2] + 0.3 * cos(t)
 render_points(extent = attr(montereybay,"extent"), heightmap = montereybay,
-           lat = unlist(circle_coords_lat), long = unlist(circle_coords_long), 
+           lat = unlist(circle_coords_lat), long = unlist(circle_coords_long),
            zscale=50, color="red", offset=100, size=5)
 render_camera(theta = 160, phi=33, zoom=0.4, fov=55)
 render_snapshot()
-
+}
+if(run_documentation()) {
 #And all of these work with `render_highquality()`
-render_highquality(point_radius = 3, clamp_value=10)
-rgl::rgl.close()
+render_highquality(point_radius = 1, min_variance = 0, samples = 16)
+}
+
+if(run_documentation()) {
+#We can also change the material of the objects by setting the `point_material` and
+#`point_material_args` arguments in `render_highquality()`
+render_highquality(point_radius = 1, min_variance = 0, samples = 16,
+                  point_material = rayrender::glossy,
+                  point_material_args = list(gloss = 0.5, reflectance = 0.2))
 }
 }

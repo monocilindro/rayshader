@@ -6,79 +6,59 @@
 \usage{
 plot_map(
   hillshade,
-  rotate = 0,
-  asp = 1,
   title_text = NA,
   title_offset = c(20, 20),
   title_color = "black",
   title_size = 30,
   title_font = "sans",
   title_style = "normal",
-  title_bar_color = NULL,
+  title_bar_color = NA,
   title_bar_alpha = 0.5,
-  title_position = "northwest",
-  keep_user_par = FALSE,
+  title_just = "left",
   ...
 )
 }
 \arguments{
 \item{hillshade}{Hillshade to be plotted.}
 
-\item{rotate}{Default `0`. Rotates the output. Possible values: `0`, `90`, `180`, `270`.}
+\item{title_text}{Default \code{NULL}. Text. Adds a title to the image, using \code{magick::image_annotate()}.}
 
-\item{asp}{Default `1`. Aspect ratio of the resulting plot. Use `asp = 1/cospi(mean_latitude/180)` to rescale
-lat/long at higher latitudes to the correct the aspect ratio.}
-
-\item{title_text}{Default `NULL`. Text. Adds a title to the image, using `magick::image_annotate()`.}
-
-\item{title_offset}{Default `c(20,20)`. Distance from the top-left (default, `gravity` direction in
+\item{title_offset}{Default \code{c(20,20)}. Distance from the top-left (default, \code{gravity} direction in
 image_annotate) corner to offset the title.}
 
-\item{title_color}{Default `black`. Font color.}
+\item{title_color}{Default \code{black}. Font color.}
 
-\item{title_size}{Default `30`. Font size in pixels.}
+\item{title_size}{Default \code{30}. Font size in pixels.}
 
-\item{title_font}{Default `sans`. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
+\item{title_font}{Default \code{sans}. String with font family such as "sans", "mono", "serif", "Times", "Helvetica",
 "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
 
-\item{title_style}{Default `normal`. Font style (e.g. `italic`).}
+\item{title_style}{Default \code{normal}. Font style (e.g. \code{italic}).}
 
-\item{title_bar_color}{Default `NULL`. If a color, this will create a colored bar under the title.}
+\item{title_bar_color}{Default \code{NA}. If a color, this will create a colored bar under the title.}
 
-\item{title_bar_alpha}{Default `0.5`. Transparency of the title bar.}
+\item{title_bar_alpha}{Default \code{0.5}. Transparency of the title bar.}
 
-\item{title_position}{Default `northwest`. Position of the title.}
+\item{title_just}{Default \code{left}. Justification of the title.}
 
-\item{keep_user_par}{Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you 
-want to set up a multi-pane plot (e.g. set `par(mfrow)`).}
-
-\item{...}{Additional arguments to pass to the `raster::plotRGB` function that displays the map.}
+\item{...}{Additional arguments to pass to the \code{raster::plotRGB} function that displays the map.}
 }
 \description{
 Displays the map in the current device.
 }
 \examples{
 #Plotting the Monterey Bay dataset with bathymetry data
-\donttest{
+if(run_documentation()) {
 water_palette = colorRampPalette(c("darkblue", "dodgerblue", "lightblue"))(200)
 bathy_hs = height_shade(montereybay, texture = water_palette)
+#For compass text
+par(family = "Arial")
 
 #Set everything below 0m to water palette
-montereybay \%>\%
- sphere_shade(zscale=10) \%>\%
- add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
+montereybay |>
+ sphere_shade(zscale=10) |>
+ add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  |>
+ add_shadow(ray_shade(montereybay,zscale=50),0.3) |>
  plot_map()
-
-#Correcting the aspect ratio for the latitude of Monterey Bay
-
-extent_mb = attr(montereybay,"extent")
-mean_latitude = mean(c(extent_mb@ymax,extent_mb@ymin))
-
-montereybay \%>\%
- sphere_shade(zscale=10) \%>\%
- add_overlay(generate_altitude_overlay(bathy_hs, montereybay, 0, 0))  \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
- plot_map(asp = 1/cospi(mean_latitude/180))
 }
 }

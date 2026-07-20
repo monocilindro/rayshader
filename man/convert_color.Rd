@@ -4,19 +4,16 @@
 \alias{convert_color}
 \title{Convert Color}
 \usage{
-convert_color(color, as_hex = FALSE)
+convert_color(color, as_hex = FALSE, linear = FALSE)
 }
 \arguments{
-\item{color}{The color to convert. Can be either a hexadecimal code, or a numeric rgb 
-vector listing three intensities between `0` and `1`.}
+\item{color}{The color to convert. Can be either a hexadecimal code, or a numeric rgb
+vector listing three intensities between \code{0} and \code{1}.}
 }
 \value{
 Color vector
 }
 \description{
 Convert Color
-}
-\examples{
-#none
 }
 \keyword{internal}

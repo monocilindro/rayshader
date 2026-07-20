@@ -7,20 +7,16 @@
 height_shade(
   heightmap,
   texture = (grDevices::colorRampPalette(c("#6AA85B", "#D9CC9A", "#FFFFFF")))(256),
-  range = NULL,
-  keep_user_par = TRUE
+  range = NULL
 )
 }
 \arguments{
 \item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point.}
 
-\item{texture}{Default `terrain.colors(256)`. A color palette for the plot.}
+\item{texture}{Default \code{terrain.colors(256)}. A color palette for the plot.}
 
-\item{range}{Default `NULL`, the full range of the heightmap. A length-2 vector specifying the maximum
+\item{range}{Default \code{NULL}, the full range of the heightmap. A length-2 vector specifying the maximum
 and minimum values to map the color palette to.}
-
-\item{keep_user_par}{Default `TRUE`. Whether to keep the user's `par()` settings. Set to `FALSE` if you 
-want to set up a multi-pane plot (e.g. set `par(mfrow)`).}
 }
 \value{
 RGB array of hillshaded texture mappings.
@@ -30,31 +26,31 @@ Calculates a color for each point on the surface using a direct elevation-to-col
 }
 \examples{
 #Create a direct mapping of elevation to color:
-montereybay \%>\%
- height_shade() \%>\%
+montereybay |>
+ height_shade() |>
  plot_map()
- 
+
 #Add a shadow:
-\donttest{
-montereybay \%>\%
- height_shade() \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
+if(run_documentation()) {
+montereybay |>
+ height_shade() |>
+ add_shadow(ray_shade(montereybay,zscale=50),0.1) |>
  plot_map()
 }
 
 #Change the palette:
-\donttest{
-montereybay \%>\%
- height_shade(texture = topo.colors(256)) \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
+if(run_documentation()) {
+montereybay |>
+ height_shade(texture = topo.colors(256)) |>
+ add_shadow(ray_shade(montereybay,zscale=50),0.1) |>
  plot_map()
 }
 
-#Really change the palette:
-\donttest{
-montereybay \%>\%
- height_shade(texture = rainbow(256)) \%>\%
- add_shadow(ray_shade(montereybay,zscale=50),0.3) \%>\%
+#Really change the palette (warning: gratuitous use of rainbow palette):
+if(run_documentation()) {
+montereybay |>
+ height_shade(texture = rainbow(256)) |>
+ add_shadow(ray_shade(montereybay,zscale=50),0.1) |>
  plot_map()
 }
 }

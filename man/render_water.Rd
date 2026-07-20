@@ -19,51 +19,50 @@ render_water(
 \arguments{
 \item{heightmap}{A two-dimensional matrix, where each entry in the matrix is the elevation at that point. All points are assumed to be evenly spaced.}
 
-\item{waterdepth}{Default `0`.}
+\item{waterdepth}{Default \code{0}.}
 
-\item{watercolor}{Default `lightblue`.}
+\item{watercolor}{Default \code{lightblue}.}
 
-\item{zscale}{Default `1`. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
-of 1 meter and the grid values are separated by 10 meters, `zscale` would be 10.}
+\item{zscale}{Default \code{1}. The ratio between the x and y spacing (which are assumed to be equal) and the z axis. For example, if the elevation levels are in units
+of 1 meter and the grid values are separated by 10 meters, \code{zscale} would be 10.}
 
-\item{wateralpha}{Default `0.5`. Water transparency.}
+\item{wateralpha}{Default \code{0.5}. Water transparency.}
 
-\item{waterlinecolor}{Default `NULL`. Color of the lines around the edges of the water layer.}
+\item{waterlinecolor}{Default \code{NULL}. Color of the lines around the edges of the water layer.}
 
-\item{waterlinealpha}{Default `1`. Water line tranparency.}
+\item{waterlinealpha}{Default \code{1}. Water line tranparency.}
 
-\item{linewidth}{Default `2`. Width of the edge lines in the scene.}
+\item{linewidth}{Default \code{2}. Width of the edge lines in the scene.}
 
-\item{remove_water}{Default `TRUE`. If `TRUE`, will remove existing water layer and replace it with new layer.}
+\item{remove_water}{Default \code{TRUE}. If \code{TRUE}, will remove existing water layer and replace it with new layer.}
 }
 \description{
 Adds water layer to the scene, removing the previous water layer if desired.
 }
 \examples{
-\dontrun{
-montereybay \%>\%
- sphere_shade() \%>\%
+if(run_documentation()) {
+montereybay |>
+ sphere_shade() |>
  plot_3d(montereybay,zscale=50)
 render_snapshot()
 }
- 
+
 #We want to add a layer of water after the initial render.
-\dontrun{
+if(run_documentation()) {
 render_water(montereybay,zscale=50)
 render_snapshot()
 }
 
 #Call it again to change the water depth
-\dontrun{
+if(run_documentation()) {
 render_water(montereybay,zscale=50,waterdepth=-1000)
 render_snapshot()
 }
 
 #Add waterlines
-\dontrun{
+if(run_documentation()) {
 render_camera(theta=-45)
 render_water(montereybay,zscale=50,waterlinecolor="white")
-render_snapshot(clear = TRUE)
-rgl::rgl.close()
+render_snapshot()
 }
 }

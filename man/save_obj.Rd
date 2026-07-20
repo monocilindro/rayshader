@@ -14,17 +14,17 @@ save_obj(
 )
 }
 \arguments{
-\item{filename}{String with the filename. If `.obj` is not at the end of the string, it will be appended automatically.}
+\item{filename}{String with the filename. If \code{.obj} is not at the end of the string, it will be appended automatically.}
 
-\item{save_texture}{Default `TRUE`. If the texture should be saved along with the geometry.}
+\item{save_texture}{Default \code{TRUE}. If the texture should be saved along with the geometry.}
 
-\item{water_index_refraction}{Default `1`. The index of refraction for the rendered water.}
+\item{water_index_refraction}{Default \code{1}. The index of refraction for the rendered water.}
 
-\item{manifold_geometry}{Default `FALSE`. If `TRUE`, this will take the additional step of making the mesh manifold.}
+\item{manifold_geometry}{Default \code{FALSE}. If \code{TRUE}, this will take the additional step of making the mesh manifold.}
 
-\item{all_face_fields}{Default `FALSE`. If `TRUE`, all OBJ face fields (v/vn/vt) will always be written.}
+\item{all_face_fields}{Default \code{FALSE}. If \code{TRUE}, all OBJ face fields (v/vn/vt) will always be written.}
 
-\item{save_shadow}{Default `FALSE`. If `TRUE`, this saves a plane with the shadow texture below the model.}
+\item{save_shadow}{Default \code{FALSE}. If \code{TRUE}, this saves a plane with the shadow texture below the model.}
 }
 \description{
 Writes the textured 3D rayshader visualization to an OBJ file.
@@ -34,28 +34,26 @@ if(interactive()) {
 filename_obj = tempfile(fileext = ".obj")
 
 #Save model of volcano
-\donttest{
-volcano \%>\%
- sphere_shade() \%>\%
+if(run_documentation()) {
+volcano |>
+ sphere_shade() |>
  plot_3d(volcano, zscale = 2)
 
 save_obj(filename_obj)
 }
 
 #Save model of volcano without texture
-\donttest{
+if(run_documentation()) {
 save_obj(filename_obj, save_texture = FALSE)
-rgl::rgl.close()
 }
 
 #Make water have realistic index of refraction
-\donttest{
-montereybay \%>\%
- sphere_shade() \%>\%
+if(run_documentation()) {
+montereybay |>
+ sphere_shade() |>
  plot_3d(montereybay, zscale = 50)
- 
+
 save_obj(filename_obj, water_index_refraction = 1.5)
-rgl::rgl.close()
 }
 }
 }
